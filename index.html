@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>SeedCrackerX | Next-Gen Minecraft Seed Cracking Suite</title>
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700;14..32,800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #03060c;
+            font-family: 'Inter', sans-serif;
+            color: #eef5ff;
+            line-height: 1.5;
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+        }
+
+        /* Animated gradient background */
+        .gradient-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            background: radial-gradient(circle at 20% 30%, #0a0f1a, #020408);
+        }
+        
+        .gradient-bg::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            top: -50%;
+            left: -50%;
+            background: radial-gradient(circle, rgba(255,174,66,0.1) 0%, transparent 70%);
+            animation: rotateBg 30s linear infinite;
+        }
+        
+        @keyframes rotateBg {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Floating particles animation */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+        
+        .particle {
+            position: absolute;
+            background: rgba(255,174,66,0.3);
+            border-radius: 50%;
+            animation: floatParticle linear infinite;
+        }
+        
+        @keyframes floatParticle {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.5;
+            }
+            90% {
+                opacity: 0.5;
+            }
+            100% {
+                transform: translateY(-100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0f1722;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #ffae42;
+            border-radius: 10px;
+            transition: background 0.3s;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #ff7b2c;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Glassmorphism navbar with animation */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.2rem 2rem;
+            flex-wrap: wrap;
+            background: rgba(2, 8, 18, 0.75);
+            backdrop-filter: blur(16px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid rgba(255, 174, 66, 0.3);
+            animation: slideDown 0.6s ease-out;
+        }
+        
+        @keyframes slideDown {
+            from {
+                transform: translateY(-100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: linear-gradient(130deg, #FFB347, #FF7E05);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            transition: transform 0.3s;
+        }
+        
+        .logo:hover {
+            transform: scale(1.05);
+        }
+        
+        .logo i {
+            color: #ffae42;
+            margin-right: 8px;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        .nav-links a {
+            color: #cbdff5;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+            font-size: 0.95rem;
+            position: relative;
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #ffae42, #ff7b2c);
+            transition: width 0.3s;
+        }
+        
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        
+        .nav-links a:hover {
+            color: #ffae42;
+            transform: translateY(-2px);
+        }
+
+        /* Hero section with entrance animation */
+        .hero {
+            padding: 4rem 0 3rem;
+            text-align: center;
+            animation: fadeInUp 0.8s ease-out;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .hero h1 {
+            font-size: 4rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+            animation: glowText 2s ease-in-out infinite;
+        }
+        
+        @keyframes glowText {
+            0%, 100% { text-shadow: 0 0 20px rgba(255,174,66,0.3); }
+            50% { text-shadow: 0 0 40px rgba(255,174,66,0.6); }
+        }
+        
+        .gradient-text {
+            background: linear-gradient(135deg, #FFD89A, #FF9E4A, #FF6A3D);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: gradientShift 3s ease infinite;
+            background-size: 200% 200%;
+        }
+        
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        /* Terminal preview with typing animation */
+        .terminal-preview {
+            background: #0a0e17e0;
+            backdrop-filter: blur(8px);
+            border: 1px solid #ffae4240;
+            border-radius: 24px;
+            max-width: 720px;
+            margin: 2rem auto;
+            padding: 1.2rem 1.8rem;
+            text-align: left;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            box-shadow: 0 20px 35px -12px black;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .terminal-preview:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 25px 45px -12px rgba(255,174,66,0.3);
+            border-color: #ffae42;
+        }
+        
+        .terminal-line {
+            color: #9cd9ff;
+            border-left: 2px solid #ffae42;
+            padding-left: 1rem;
+            margin: 0.5rem 0;
+            animation: slideInRight 0.5s ease-out;
+        }
+        
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* Section styles with scroll reveal animation */
+        section {
+            padding: 4rem 0;
+            border-bottom: 1px solid rgba(255, 174, 66, 0.15);
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease-out;
+        }
+        
+        section.revealed {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .section-title {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            position: relative;
+        }
+        
+        .section-title i {
+            color: #ffae42;
+            font-size: 2rem;
+            transition: transform 0.3s;
+        }
+        
+        .section-title:hover i {
+            transform: rotate(360deg) scale(1.1);
+        }
+
+        /* Card grid with hover animations */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .feature-card {
+            background: #0c111cd9;
+            backdrop-filter: blur(4px);
+            border-radius: 28px;
+            padding: 1.8rem;
+            border: 1px solid #2a374b;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,174,66,0.1), transparent);
+            transition: left 0.5s;
+        }
+        
+        .feature-card:hover::before {
+            left: 100%;
+        }
+        
+        .feature-card:hover {
+            border-color: #ffae42;
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 20px 35px -12px rgba(255,174,66,0.3);
+        }
+        
+        .feature-card i {
+            font-size: 2rem;
+            color: #ffae42;
+            margin-bottom: 1rem;
+            transition: transform 0.3s;
+        }
+        
+        .feature-card:hover i {
+            transform: scale(1.2) rotate(5deg);
+        }
+
+        /* Click animation for cards */
+        .feature-card:active {
+            transform: translateY(-4px) scale(0.98);
+            transition: transform 0.1s;
+        }
+
+        /* Structure badges with animations */
+        .bits-visual {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+        
+        .struct-badge {
+            background: #1a2538;
+            border-radius: 40px;
+            padding: 0.4rem 1rem;
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: all 0.3s;
+            cursor: pointer;
+            animation: fadeInScale 0.5s ease-out backwards;
+            animation-delay: calc(var(--i, 0) * 0.05s);
+        }
+        
+        .struct-badge:hover {
+            background: #ffae42;
+            color: #0a0c12;
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 5px 15px rgba(255,174,66,0.4);
+        }
+        
+        @keyframes fadeInScale {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        
+        .struct-badge span {
+            color: #ffae42;
+            font-weight: 800;
+            transition: color 0.3s;
+        }
+        
+        .struct-badge:hover span {
+            color: #0a0c12;
+        }
+
+        /* Table with row animations */
+        .version-table {
+            overflow-x: auto;
+            background: #070c14;
+            border-radius: 24px;
+            padding: 0.2rem;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        th, td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #1f2a3a;
+        }
+        
+        th {
+            color: #ffcd94;
+        }
+        
+        tbody tr {
+            transition: all 0.3s;
+            animation: fadeInRow 0.5s ease-out backwards;
+            animation-delay: calc(var(--row-index, 0) * 0.05s);
+        }
+        
+        @keyframes fadeInRow {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        tbody tr:hover {
+            background: rgba(255,174,66,0.1);
+            transform: scale(1.01);
+        }
+
+        /* Command blocks with typing effect */
+        .cmd-block {
+            background: #070b12;
+            border-left: 4px solid #ffae42;
+            padding: 1rem 1.5rem;
+            font-family: 'JetBrains Mono', monospace;
+            border-radius: 16px;
+            margin: 1rem 0;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .cmd-block:hover {
+            transform: translateX(8px);
+            border-left-width: 6px;
+            background: #0a1020;
+        }
+        
+        .cmd-block::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,174,66,0.1), transparent);
+            transition: left 0.5s;
+        }
+        
+        .cmd-block:hover::after {
+            left: 100%;
+        }
+
+        /* Download button with ripple effect */
+        .download-btn {
+            background: linear-gradient(95deg, #ffae42, #ff7b2c);
+            padding: 0.9rem 2rem;
+            border-radius: 60px;
+            font-weight: 700;
+            color: #0a0c12;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .download-btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.5);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+        
+        .download-btn:active::before {
+            width: 300px;
+            height: 300px;
+        }
+        
+        .download-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 25px rgba(255,174,66,0.5);
+        }
+
+        /* Progress bar animation */
+        .progress-bit {
+            background: #1f2a3a;
+            border-radius: 30px;
+            height: 12px;
+            width: 100%;
+            margin: 12px 0;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            width: 78%;
+            height: 100%;
+            background: linear-gradient(90deg, #ffae42, #ff7b2c);
+            border-radius: 30px;
+            animation: fillProgress 1.5s ease-out;
+            position: relative;
+        }
+        
+        @keyframes fillProgress {
+            from {
+                width: 0%;
+            }
+            to {
+                width: 78%;
+            }
+        }
+
+        /* Footer styles */
+        .footer {
+            text-align: center;
+            padding: 3rem;
+            background: #010308;
+            color: #7b8ba3;
+            animation: fadeInUp 0.6s ease-out;
+        }
+        
+        .social-links a {
+            display: inline-block;
+            transition: all 0.3s;
+        }
+        
+        .social-links a:hover {
+            transform: translateY(-5px) rotate(360deg);
+            color: #ffae42;
+        }
+
+        /* Responsive */
+        @media (max-width: 780px) {
+            .hero h1 { font-size: 2.6rem; }
+            .container { padding: 0 1.2rem; }
+            .section-title { font-size: 1.8rem; }
+        }
+        
+        /* Badge container */
+        .badge-container {
+            display: flex;
+            justify-content: center;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+            margin: 1.5rem 0;
+        }
+        
+        .badge {
+            background: #111a28;
+            padding: 0.4rem 1.2rem;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            border: 1px solid #ffae4230;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        
+        .badge:hover {
+            transform: translateY(-2px);
+            border-color: #ffae42;
+            background: #ffae4220;
+        }
+    </style>
+</head>
+<body>
+<div class="gradient-bg"></div>
+<div class="particles" id="particles"></div>
+
+<nav class="navbar">
+    <div class="logo"><i class="fas fa-crown"></i> SeedCracker<span class="gradient-text">X</span></div>
+    <div class="nav-links">
+        <a href="#features" data-tab>⚡ Features</a>
+        <a href="#structures" data-tab>🏛️ Structures</a>
+        <a href="#versions" data-tab>📌 Versions</a>
+        <a href="#commands" data-tab>⌨️ Commands</a>
+        <a href="#database" data-tab>🗄️ Database</a>
+        <a href="#api" data-tab>🔌 API</a>
+        <a href="#tutorials" data-tab>🎥 Tutorials</a>
+    </div>
+    <div><a href="https://github.com/19MisterX98/SeedcrackerX" target="_blank" style="color:#ffae42;"><i class="fab fa-github"></i> Repo</a></div>
+</nav>
+
+<header class="hero">
+    <div class="container">
+        <h1>CRACK THE <span class="gradient-text">MINECRAFT SEED</span><br>WITH PRECISION</h1>
+        <div class="terminal-preview">
+            <div><i class="fas fa-angle-right" style="color:#ffae42;"></i> <span style="color:#b1e5ff;">SeedCrackerX initialized [Fabric 1.21+]</span></div>
+            <div class="terminal-line">> /seedcracker data bits</div>
+            <div class="terminal-line">[INFO] Normal bits: 32/32 | Liftable bits: 40/40</div>
+            <div class="terminal-line">[CRACKER] World seed found: -2846754930283746 (in 4.2s)</div>
+            <div><i class="fas fa-check-circle" style="color:#6fcf97;"></i> Seed verified! Structure cracking success.</div>
+        </div>
+        <div class="badge-container">
+            <span class="badge"><i class="fab fa-fabric"></i> Fabric Loader</span>
+            <span class="badge"><i class="fas fa-dungeon"></i> 9+ Structures</span>
+            <span class="badge"><i class="fas fa-chart-simple"></i> 40 Liftable Bits</span>
+            <span class="badge"><i class="fas fa-globe"></i> Auto DB Upload</span>
+        </div>
+        <a href="https://github.com/19MisterX98/SeedcrackerX/releases" target="_blank" class="download-btn"><i class="fas fa-download"></i> Grab Latest Release (2.15.11+)</a>
+    </div>
+</header>
+
+<main class="container">
+    <!-- Features section -->
+    <section id="features">
+        <div class="section-title"><i class="fas fa-microchip"></i> <span>Next‑Gen Seed Cracking Engine</span></div>
+        <div class="card-grid">
+            <div class="feature-card" data-card><i class="fas fa-cubes"></i><h3>Liftable Structure Cracking</h3><p>Igloo, Desert Pyramid, Jungle Temple, Swamp Hut, Shipwreck, Pillager Outpost, Ocean Monument — each contributes liftable bits (8-9 bits). After 40 bits, auto-cracking begins.</p></div>
+            <div class="feature-card" data-card><i class="fas fa-dragon"></i><h3>End Dimension Analysis</h3><p>Find 5+ End Cities → return to center island → pillar positions yield seed. Configurable end gateways toggle (disable to avoid wrong data).</p></div>
+            <div class="feature-card" data-card><i class="fas fa-tree"></i><h3>Legacy Biome & Decorator</h3><p>For 1.17-: Dungeon, Warped Fungus, Desert Well, Emerald Ore, End Gateway cracking. Full backwards compatibility.</p></div>
+            <div class="feature-card" data-card><i class="fas fa-chart-line"></i><h3>Real-time Bits Tracker</h3><p><code>/seedcracker data bits</code> shows normal bits (need 32) + liftable bits (need 40). Outline highlights found structures.</p></div>
+            <div class="feature-card" data-card><i class="fas fa-database"></i><h3>Community Seed Database</h3><p>Enable in config → auto-uploads cracked seeds to a public Google Sheet. Help build largest seed repository.</p></div>
+            <div class="feature-card" data-card><i class="fas fa-vial"></i><h3>Debug & Finder Reload</h3><p><code>/seedcracker cracker debug</code> shows advanced info. <code>/seedcracker finder reload</code> rescans chunks.</p></div>
+        </div>
+    </section>
+
+    <!-- Structures section -->
+    <section id="structures">
+        <div class="section-title"><i class="fas fa-flag-checkered"></i> <span>Structure Bits Reference (1.18+)</span></div>
+        <div class="bits-visual" id="bitsVisual">
+            <div class="struct-badge" style="--i:1"><i class="fas fa-home"></i> Igloo · <span>9 | 9</span></div>
+            <div class="struct-badge" style="--i:2"><i class="fas fa-landmark"></i> Desert Pyramid · <span>9 | 9</span></div>
+            <div class="struct-badge" style="--i:3"><i class="fas fa-tree"></i> Jungle Temple · <span>9 | 9</span></div>
+            <div class="struct-badge" style="--i:4"><i class="fas fa-skull"></i> Swamp Hut · <span>9 | 9</span></div>
+            <div class="struct-badge" style="--i:5"><i class="fas fa-ship"></i> Shipwreck · <span>8 | 8</span></div>
+            <div class="struct-badge" style="--i:6"><i class="fas fa-fort-awesome"></i> Pillager Outpost · <span>0 / 9 liftable</span></div>
+            <div class="struct-badge" style="--i:7"><i class="fas fa-water"></i> Ocean Monument · <span>9 reg</span></div>
+        </div>
+        <div class="feature-card">
+            <p><strong>⚡ How cracking works:</strong> Combine any valid structures until you reach 40 liftable bits AND 32 regular bits. After threshold, the mod reduces structure seeds then brute forces world seed.</p>
+            <div class="progress-bit"><div class="progress-fill"></div></div>
+            <p><i class="fas fa-info-circle"></i> Use <code>/seedcracker data bits</code> to monitor your progress live.</p>
+        </div>
+    </section>
+
+    <!-- Versions section -->
+    <section id="versions">
+        <div class="section-title"><i class="fas fa-code-branch"></i> <span>Full Version Support Matrix</span></div>
+        <div class="version-table">
+            <table>
+                <thead><tr><th>Minecraft</th><th>SeedCrackerX</th><th>Cracking Method</th><th>Dependencies</th></tr></thead>
+                <tbody>
+                    <tr style="--row-index:0"><td>1.21.11</td><td>2.15.6+</td><td>Structure bits + End Pillars</td><td>Fabric 0.14.0+</td></tr>
+                    <tr style="--row-index:1"><td>1.21 - 1.21.10</td><td>2.15.0 - 2.15.5</td><td>Liftable structures</td><td>Fabric loader</td></tr>
+                    <tr style="--row-index:2"><td>1.20 - 1.20.6</td><td>2.14.4 - 2.14.7</td><td>Full structure cracking</td><td>Fabric API, Mod Menu</td></tr>
+                    <tr style="--row-index:3"><td>1.19 - 1.19.4</td><td>2.13 - 2.14.2</td><td>Bits + End Cities</td><td>Fabric loader</td></tr>
+                    <tr style="--row-index:4"><td>1.18 - 1.18.2</td><td>2.11 - 2.12</td><td>Modern structure cracking</td><td>Fabric loader</td></tr>
+                    <tr style="--row-index:5"><td>1.17 - 1.17.1</td><td>2.10.1</td><td>Dungeon / Warped fungus</td><td>Fabric</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- Commands section -->
+    <section id="commands">
+        <div class="section-title"><i class="fas fa-terminal"></i> <span>Full Command Suite</span></div>
+        <div class="card-grid">
+            <div class="feature-card"><i class="fas fa-sliders-h"></i><h3>/seedcracker gui</h3><p>Open config GUI (1.19.3+). Toggle finders, render mode, database & server mc-version.</p></div>
+            <div class="feature-card"><i class="fas fa-chart-simple"></i><h3>/seedcracker data bits</h3><p>Display current normal bits and liftable bits. Cracking starts at 32/40 bits respectively.</p></div>
+            <div class="feature-card"><i class="fas fa-trash-alt"></i><h3>/seedcracker data clear</h3><p>Clear all collected data without relogging — perfect for multi-world servers.</p></div>
+            <div class="feature-card"><i class="fas fa-sync-alt"></i><h3>/seedcracker finder reload</h3><p>Rescans already loaded chunks to detect structures that were missed.</p></div>
+        </div>
+        <div class="cmd-block"><i class="fas fa-save"></i> <strong>/seed data restore</strong> — Restore previously saved structure data from config folder.</div>
+    </section>
+
+    <!-- Database section -->
+    <section id="database">
+        <div class="section-title"><i class="fas fa-cloud-upload-alt"></i> <span>Global Seed Database Initiative</span></div>
+        <div class="feature-card">
+            <i class="fas fa-chart-line" style="font-size:2rem;"></i>
+            <p style="margin: 1rem 0;"><strong>Enable database in config</strong> and cracked seeds from servers with 10+ players will be sent to a public Google Sheet. Over 2000+ seeds collected from multiplayer servers.</p>
+            <div class="badge-container" style="justify-content:flex-start;"><span class="badge"><i class="fab fa-google"></i> Live Spreadsheet</span><span class="badge"><i class="fas fa-shield-alt"></i> Anonymized data</span></div>
+        </div>
+    </section>
+
+    <!-- API section -->
+    <section id="api">
+        <div class="section-title"><i class="fas fa-code"></i> <span>Developer API & JitPack</span></div>
+        <div class="card-grid">
+            <div class="feature-card"><i class="fab fa-java"></i><h3>Simple Seed Listener</h3><p>Implement <code>SeedCrackerAPI</code> and register entrypoint in fabric.mod.json under "seedcrackerx".</p></div>
+            <div class="feature-card"><i class="fab fa-github"></i><h3>JitPack Integration</h3><p>Add maven jitpack.io and include seedcrackerx-api dependency.</p></div>
+        </div>
+    </section>
+
+    <!-- Tutorials section -->
+    <section id="tutorials">
+        <div class="section-title"><i class="fab fa-youtube"></i> <span>Video Tutorials & Walkthroughs</span></div>
+        <div class="card-grid">
+            <div class="feature-card"><i class="fas fa-video"></i><h3>Structures & End Pillars</h3><p>Detailed guide by 19MisterX98 on collecting bits and end pillar cracking.</p></div>
+            <div class="feature-card"><i class="fas fa-fungus"></i><h3>Nether Warped Fungus (1.17)</h3><p>Legacy method: find huge fungi in warped forests to crack nether seed.</p></div>
+            <div class="feature-card"><i class="fas fa-chalkboard-user"></i><h3>Dungeon Cracking Basics</h3><p>For older versions (pre-1.18) — locate dungeons and let mod auto-crack.</p></div>
+        </div>
+    </section>
+</main>
+
+<footer class="footer">
+    <div class="social-links" style="display: flex; justify-content: center; gap: 1.5rem; margin-bottom: 1rem;">
+        <a href="https://github.com/19MisterX98/SeedcrackerX" style="color:#ffae42;"><i class="fab fa-github fa-lg"></i></a>
+        <a href="#" style="color:#ffae42;"><i class="fab fa-discord fa-lg"></i></a>
+        <a href="#" style="color:#ffae42;"><i class="fab fa-youtube fa-lg"></i></a>
+    </div>
+    <p>SeedCrackerX — Not affiliated with Mojang. All credits to 19MisterX98 and contributors.</p>
+    <p style="margin-top: 1rem; font-size: 0.8rem;"><i class="fas fa-cube"></i> Uncover the hidden numeric DNA of your Minecraft world.</p>
+</footer>
+
+<script>
+    // Create floating particles
+    function createParticles() {
+        const particlesContainer = document.getElementById('particles');
+        for (let i = 0; i < 50; i++) {
+            const particle = document.createElement('div');
+            particle.classList.add('particle');
+            const size = Math.random() * 4 + 2;
+            particle.style.width = size + 'px';
+            particle.style.height = size + 'px';
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.animationDuration = Math.random() * 10 + 5 + 's';
+            particle.style.animationDelay = Math.random() * 5 + 's';
+            particlesContainer.appendChild(particle);
+        }
+    }
+    createParticles();
+
+    // Scroll reveal animation for sections
+    const sections = document.querySelectorAll('section');
+    
+    function revealSections() {
+        sections.forEach(section => {
+            const sectionTop = section.getBoundingClientRect().top;
+            const windowHeight = window.innerHeight;
+            if (sectionTop < windowHeight - 100) {
+                section.classList.add('revealed');
+            }
+        });
+    }
+    
+    window.addEventListener('scroll', revealSections);
+    revealSections();
+    
+    // Smooth scrolling for navigation links with click animation
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('href');
+            if (targetId === '#') return;
+            const target = document.querySelector(targetId);
+            if (target) {
+                // Add click ripple effect
+                const ripple = document.createElement('div');
+                ripple.style.position = 'fixed';
+                ripple.style.width = '10px';
+                ripple.style.height = '10px';
+                ripple.style.borderRadius = '50%';
+                ripple.style.backgroundColor = 'rgba(255,174,66,0.5';
+                ripple.style.pointerEvents = 'none';
+                ripple.style.zIndex = '9999';
+                ripple.style.transform = 'scale(0)';
+                ripple.style.transition = 'transform 0.5s ease-out';
+                document.body.appendChild(ripple);
+                
+                const rect = this.getBoundingClientRect();
+                ripple.style.left = rect.left + rect.width/2 + 'px';
+                ripple.style.top = rect.top + rect.height/2 + 'px';
+                
+                setTimeout(() => {
+                    ripple.style.transform = 'scale(50)';
+                }, 10);
+                
+                setTimeout(() => {
+                    ripple.remove();
+                }, 500);
+                
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+                
+                // Add animation class to target section
+                target.style.animation = 'none';
+                target.offsetHeight;
+                target.style.animation = 'fadeInUp 0.6s ease-out';
+                setTimeout(() => {
+                    target.style.animation = '';
+                }, 600);
+            }
+        });
+    });
+    
+    // Add click animation to all cards
+    document.querySelectorAll('.feature-card').forEach(card => {
+        card.addEventListener('click', function() {
+            this.style.animation = 'none';
+            this.offsetHeight;
+            this.style.animation = 'pulse 0.3s ease-out';
+            setTimeout(() => {
+                this.style.animation = '';
+            }, 300);
+        });
+    });
+    
+    // Add hover effect to structure badges with click notification
+    document.querySelectorAll('.struct-badge').forEach((badge, index) => {
+        badge.addEventListener('click', function() {
+            const bits = this.innerText.match(/\d+/g);
+            if (bits) {
+                const notification = document.createElement('div');
+                notification.textContent = `📊 ${this.innerText.split('·')[0]} provides ${bits[0]}+ bits`;
+                notification.style.position = 'fixed';
+                notification.style.bottom = '20px';
+                notification.style.right = '20px';
+                notification.style.backgroundColor = '#ffae42';
+                notification.style.color = '#0a0c12';
+                notification.style.padding = '10px 20px';
+                notification.style.borderRadius = '40px';
+                notification.style.fontWeight = 'bold';
+                notification.style.zIndex = '9999';
+                notification.style.animation = 'fadeInUp 0.3s ease-out';
+                document.body.appendChild(notification);
+                setTimeout(() => {
+                    notification.style.animation = 'fadeInUp 0.3s reverse';
+                    setTimeout(() => notification.remove(), 300);
+                }, 2000);
+            }
+        });
+    });
+    
+    // Add typing animation to terminal on load
+    setTimeout(() => {
+        const terminalLines = document.querySelectorAll('.terminal-line');
+        terminalLines.forEach((line, index) => {
+            line.style.animation = 'none';
+            line.offsetHeight;
+            line.style.animation = `slideInRight 0.5s ease-out ${index * 0.2}s forwards`;
+            line.style.opacity = '0';
+        });
+    }, 100);
+</script>
+</body>
+</html>
