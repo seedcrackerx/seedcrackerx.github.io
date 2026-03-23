@@ -370,7 +370,96 @@
             transition: transform 0.1s;
         }
 
-        /* Structure badges with animations */
+        /* Version table with download buttons */
+        .version-table {
+            overflow-x: auto;
+            background: #070c14;
+            border-radius: 24px;
+            padding: 0.2rem;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        th, td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #1f2a3a;
+        }
+        
+        th {
+            color: #ffcd94;
+            font-weight: 600;
+        }
+        
+        tbody tr {
+            transition: all 0.3s;
+            animation: fadeInRow 0.5s ease-out backwards;
+            animation-delay: calc(var(--row-index, 0) * 0.05s);
+        }
+        
+        @keyframes fadeInRow {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        tbody tr:hover {
+            background: rgba(255,174,66,0.1);
+            transform: scale(1.01);
+        }
+        
+        .download-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: linear-gradient(95deg, #ffae42, #ff7b2c);
+            color: #0a0c12;
+            padding: 0.4rem 1rem;
+            border-radius: 40px;
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .download-link:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(255,174,66,0.4);
+        }
+        
+        .download-link i {
+            font-size: 0.9rem;
+        }
+        
+        .github-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #1f2a3a;
+            color: #ffae42;
+            padding: 0.4rem 1rem;
+            border-radius: 40px;
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .github-link:hover {
+            background: #ffae42;
+            color: #0a0c12;
+            transform: scale(1.05);
+        }
+
+        /* Structure badges */
         .bits-visual {
             display: flex;
             flex-wrap: wrap;
@@ -418,52 +507,7 @@
             color: #0a0c12;
         }
 
-        /* Table with row animations */
-        .version-table {
-            overflow-x: auto;
-            background: #070c14;
-            border-radius: 24px;
-            padding: 0.2rem;
-        }
-        
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        
-        th, td {
-            padding: 1rem;
-            text-align: left;
-            border-bottom: 1px solid #1f2a3a;
-        }
-        
-        th {
-            color: #ffcd94;
-        }
-        
-        tbody tr {
-            transition: all 0.3s;
-            animation: fadeInRow 0.5s ease-out backwards;
-            animation-delay: calc(var(--row-index, 0) * 0.05s);
-        }
-        
-        @keyframes fadeInRow {
-            from {
-                opacity: 0;
-                transform: translateX(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-        
-        tbody tr:hover {
-            background: rgba(255,174,66,0.1);
-            transform: scale(1.01);
-        }
-
-        /* Command blocks with typing effect */
+        /* Command blocks */
         .cmd-block {
             background: #070b12;
             border-left: 4px solid #ffae42;
@@ -481,62 +525,8 @@
             border-left-width: 6px;
             background: #0a1020;
         }
-        
-        .cmd-block::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,174,66,0.1), transparent);
-            transition: left 0.5s;
-        }
-        
-        .cmd-block:hover::after {
-            left: 100%;
-        }
 
-        /* Download button with ripple effect */
-        .download-btn {
-            background: linear-gradient(95deg, #ffae42, #ff7b2c);
-            padding: 0.9rem 2rem;
-            border-radius: 60px;
-            font-weight: 700;
-            color: #0a0c12;
-            display: inline-flex;
-            align-items: center;
-            gap: 12px;
-            text-decoration: none;
-            transition: all 0.3s;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .download-btn::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            border-radius: 50%;
-            background: rgba(255,255,255,0.5);
-            transform: translate(-50%, -50%);
-            transition: width 0.6s, height 0.6s;
-        }
-        
-        .download-btn:active::before {
-            width: 300px;
-            height: 300px;
-        }
-        
-        .download-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 8px 25px rgba(255,174,66,0.5);
-        }
-
-        /* Progress bar animation */
+        /* Progress bar */
         .progress-bit {
             background: #1f2a3a;
             border-radius: 30px;
@@ -552,45 +542,13 @@
             background: linear-gradient(90deg, #ffae42, #ff7b2c);
             border-radius: 30px;
             animation: fillProgress 1.5s ease-out;
-            position: relative;
         }
         
         @keyframes fillProgress {
-            from {
-                width: 0%;
-            }
-            to {
-                width: 78%;
-            }
+            from { width: 0%; }
+            to { width: 78%; }
         }
 
-        /* Footer styles */
-        .footer {
-            text-align: center;
-            padding: 3rem;
-            background: #010308;
-            color: #7b8ba3;
-            animation: fadeInUp 0.6s ease-out;
-        }
-        
-        .social-links a {
-            display: inline-block;
-            transition: all 0.3s;
-        }
-        
-        .social-links a:hover {
-            transform: translateY(-5px) rotate(360deg);
-            color: #ffae42;
-        }
-
-        /* Responsive */
-        @media (max-width: 780px) {
-            .hero h1 { font-size: 2.6rem; }
-            .container { padding: 0 1.2rem; }
-            .section-title { font-size: 1.8rem; }
-        }
-        
-        /* Badge container */
         .badge-container {
             display: flex;
             justify-content: center;
@@ -614,6 +572,50 @@
             transform: translateY(-2px);
             border-color: #ffae42;
             background: #ffae4220;
+        }
+
+        .download-btn {
+            background: linear-gradient(95deg, #ffae42, #ff7b2c);
+            padding: 0.9rem 2rem;
+            border-radius: 60px;
+            font-weight: 700;
+            color: #0a0c12;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .download-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 25px rgba(255,174,66,0.5);
+        }
+
+        .footer {
+            text-align: center;
+            padding: 3rem;
+            background: #010308;
+            color: #7b8ba3;
+        }
+        
+        .social-links a {
+            display: inline-block;
+            transition: all 0.3s;
+        }
+        
+        .social-links a:hover {
+            transform: translateY(-5px) rotate(360deg);
+            color: #ffae42;
+        }
+
+        @media (max-width: 780px) {
+            .hero h1 { font-size: 2.6rem; }
+            .container { padding: 0 1.2rem; }
+            .section-title { font-size: 1.8rem; }
+            th, td { padding: 0.75rem; font-size: 0.85rem; }
         }
     </style>
 </head>
@@ -651,7 +653,7 @@
             <span class="badge"><i class="fas fa-chart-simple"></i> 40 Liftable Bits</span>
             <span class="badge"><i class="fas fa-globe"></i> Auto DB Upload</span>
         </div>
-        <a href="https://github.com/19MisterX98/SeedcrackerX/releases" target="_blank" class="download-btn"><i class="fas fa-download"></i> Grab Latest Release (2.15.11+)</a>
+        <a href="https://github.com/19MisterX98/SeedcrackerX/releases" target="_blank" class="download-btn"><i class="fas fa-download"></i> Latest Release (2.15.11+)</a>
     </div>
 </header>
 
@@ -661,7 +663,7 @@
         <div class="section-title"><i class="fas fa-microchip"></i> <span>Next‑Gen Seed Cracking Engine</span></div>
         <div class="card-grid">
             <div class="feature-card" data-card><i class="fas fa-cubes"></i><h3>Liftable Structure Cracking</h3><p>Igloo, Desert Pyramid, Jungle Temple, Swamp Hut, Shipwreck, Pillager Outpost, Ocean Monument — each contributes liftable bits (8-9 bits). After 40 bits, auto-cracking begins.</p></div>
-            <div class="feature-card" data-card><i class="fas fa-dragon"></i><h3>End Dimension Analysis</h3><p>Find 5+ End Cities → return to center island → pillar positions yield seed. Configurable end gateways toggle (disable to avoid wrong data).</p></div>
+            <div class="feature-card" data-card><i class="fas fa-dragon"></i><h3>End Dimension Analysis</h3><p>Find 5+ End Cities → return to center island → pillar positions yield seed. Configurable end gateways toggle.</p></div>
             <div class="feature-card" data-card><i class="fas fa-tree"></i><h3>Legacy Biome & Decorator</h3><p>For 1.17-: Dungeon, Warped Fungus, Desert Well, Emerald Ore, End Gateway cracking. Full backwards compatibility.</p></div>
             <div class="feature-card" data-card><i class="fas fa-chart-line"></i><h3>Real-time Bits Tracker</h3><p><code>/seedcracker data bits</code> shows normal bits (need 32) + liftable bits (need 40). Outline highlights found structures.</p></div>
             <div class="feature-card" data-card><i class="fas fa-database"></i><h3>Community Seed Database</h3><p>Enable in config → auto-uploads cracked seeds to a public Google Sheet. Help build largest seed repository.</p></div>
@@ -688,22 +690,34 @@
         </div>
     </section>
 
-    <!-- Versions section -->
+    <!-- Versions section with DOWNLOAD LINKS -->
     <section id="versions">
-        <div class="section-title"><i class="fas fa-code-branch"></i> <span>Full Version Support Matrix</span></div>
+        <div class="section-title"><i class="fas fa-code-branch"></i> <span>Full Version Support Matrix + Downloads</span></div>
         <div class="version-table">
             <table>
-                <thead><tr><th>Minecraft</th><th>SeedCrackerX</th><th>Cracking Method</th><th>Dependencies</th></tr></thead>
+                <thead>
+                    <tr><th>Minecraft</th><th>SeedCrackerX</th><th>Cracking Method</th><th>Download</th></tr>
+                </thead>
                 <tbody>
-                    <tr style="--row-index:0"><td>1.21.11</td><td>2.15.6+</td><td>Structure bits + End Pillars</td><td>Fabric 0.14.0+</td></tr>
-                    <tr style="--row-index:1"><td>1.21 - 1.21.10</td><td>2.15.0 - 2.15.5</td><td>Liftable structures</td><td>Fabric loader</td></tr>
-                    <tr style="--row-index:2"><td>1.20 - 1.20.6</td><td>2.14.4 - 2.14.7</td><td>Full structure cracking</td><td>Fabric API, Mod Menu</td></tr>
-                    <tr style="--row-index:3"><td>1.19 - 1.19.4</td><td>2.13 - 2.14.2</td><td>Bits + End Cities</td><td>Fabric loader</td></tr>
-                    <tr style="--row-index:4"><td>1.18 - 1.18.2</td><td>2.11 - 2.12</td><td>Modern structure cracking</td><td>Fabric loader</td></tr>
-                    <tr style="--row-index:5"><td>1.17 - 1.17.1</td><td>2.10.1</td><td>Dungeon / Warped fungus</td><td>Fabric</td></tr>
+                    <tr style="--row-index:0"><td>1.21.11</td><td>2.15.6+</td><td>Structure bits + End Pillars</td><td><a href="https://raw.githubusercontent.com/seedcrackerx/seedcrackerx.github.io/refs/heads/main/SeedCrackerX-2.15.6.jar" class="download-link" download><i class="fas fa-download"></i> 2.15.6.jar</a></td></tr>
+                    <tr style="--row-index:1"><td>1.21.9-1.21.10</td><td>2.15.5</td><td>Liftable structures</td><td><a href="https://raw.githubusercontent.com/seedcrackerx/seedcrackerx.github.io/refs/heads/main/SeedCrackerX-2.15.5.jar" class="download-link" download><i class="fas fa-download"></i> 2.15.5.jar</a></td></tr>
+                    <tr style="--row-index:2"><td>1.21.6-1.21.8</td><td>2.15.4</td><td>Liftable structures</td><td><a href="https://raw.githubusercontent.com/seedcrackerx/seedcrackerx.github.io/refs/heads/main/SeedCrackerX-2.15.4.jar" class="download-link" download><i class="fas fa-download"></i> 2.15.4.jar</a></td></tr>
+                    <tr style="--row-index:3"><td>1.21.5</td><td>2.15.3</td><td>Liftable structures</td><td><a href="https://raw.githubusercontent.com/seedcrackerx/seedcrackerx.github.io/refs/heads/main/SeedCrackerX-2.15.3.jar" class="download-link" download><i class="fas fa-download"></i> 2.15.3.jar</a></td></tr>
+                    <tr style="--row-index:4"><td>1.21.4</td><td>2.15.2</td><td>Liftable structures</td><td><a href="https://raw.githubusercontent.com/seedcrackerx/seedcrackerx.github.io/refs/heads/main/SeedCrackerX-2.15.2.jar" class="download-link" download><i class="fas fa-download"></i> 2.15.2.jar</a></td></tr>
+                    <tr style="--row-index:5"><td>1.21.2-1.21.3</td><td>2.15.1</td><td>Liftable structures</td><td><a href="https://raw.githubusercontent.com/seedcrackerx/seedcrackerx.github.io/refs/heads/main/SeedCrackerX-2.15.1.jar" class="download-link" download><i class="fas fa-download"></i> 2.15.1.jar</a></td></tr>
+                    <tr style="--row-index:6"><td>1.21-1.21.1</td><td>2.15.0</td><td>Liftable structures</td><td><a href="https://raw.githubusercontent.com/seedcrackerx/seedcrackerx.github.io/refs/heads/main/SeedCrackerX-2.15.0.jar" class="download-link" download><i class="fas fa-download"></i> 2.15.0.jar</a></td></tr>
+                    <tr style="--row-index:7"><td>1.20.6</td><td>2.14.7</td><td>Full structure cracking</td><td><a href="https://github.com/19MisterX98/SeedcrackerX/releases" target="_blank" class="github-link"><i class="fab fa-github"></i> GitHub Releases</a></td></tr>
+                    <tr style="--row-index:8"><td>1.20.4</td><td>2.14.6</td><td>Full structure cracking</td><td><a href="https://github.com/19MisterX98/SeedcrackerX/releases" target="_blank" class="github-link"><i class="fab fa-github"></i> GitHub Releases</a></td></tr>
+                    <tr style="--row-index:9"><td>1.20.2</td><td>2.14.5</td><td>Bits + End Cities</td><td><a href="https://github.com/19MisterX98/SeedcrackerX/releases" target="_blank" class="github-link"><i class="fab fa-github"></i> GitHub Releases</a></td></tr>
+                    <tr style="--row-index:10"><td>1.20-1.20.1</td><td>2.14.4</td><td>Bits + End Cities</td><td><a href="https://github.com/19MisterX98/SeedcrackerX/releases" target="_blank" class="github-link"><i class="fab fa-github"></i> GitHub Releases</a></td></tr>
+                    <tr style="--row-index:11"><td>1.19.4</td><td>2.14.2</td><td>Bits + End Cities</td><td><a href="https://github.com/19MisterX98/SeedcrackerX/releases" target="_blank" class="github-link"><i class="fab fa-github"></i> GitHub Releases</a></td></tr>
+                    <tr style="--row-index:12"><td>1.19.3</td><td>2.13.1</td><td>Bits + End Cities</td><td><a href="https://github.com/19MisterX98/SeedcrackerX/releases" target="_blank" class="github-link"><i class="fab fa-github"></i> GitHub Releases</a></td></tr>
+                    <tr style="--row-index:13"><td>1.19-1.19.2</td><td>2.13</td><td>Bits + End Cities</td><td><a href="https://github.com/19MisterX98/SeedcrackerX/releases" target="_blank" class="github-link"><i class="fab fa-github"></i> GitHub Releases</a></td></tr>
+                    <tr style="--row-index:14"><td>1.18.2</td><td>2.12</td><td>Modern structure cracking</td><td><a href="https://github.com/19MisterX98/SeedcrackerX/releases" target="_blank" class="github-link"><i class="fab fa-github"></i> GitHub Releases</a></td></tr>
                 </tbody>
             </table>
         </div>
+        <div class="cmd-block" style="margin-top:1rem;"><i class="fas fa-info-circle"></i> Direct downloads available for versions 2.15.0 through 2.15.6. For older versions, please visit the official GitHub Releases page.</div>
     </section>
 
     <!-- Commands section -->
@@ -750,7 +764,7 @@
 
 <footer class="footer">
     <div class="social-links" style="display: flex; justify-content: center; gap: 1.5rem; margin-bottom: 1rem;">
-        <a href="https://github.com/19MisterX98/SeedcrackerX" style="color:#ffae42;"><i class="fab fa-github fa-lg"></i></a>
+        <a href="https://github.com/19MisterX98/SeedcrackerX" target="_blank" style="color:#ffae42;"><i class="fab fa-github fa-lg"></i></a>
         <a href="#" style="color:#ffae42;"><i class="fab fa-discord fa-lg"></i></a>
         <a href="#" style="color:#ffae42;"><i class="fab fa-youtube fa-lg"></i></a>
     </div>
@@ -792,103 +806,54 @@
     window.addEventListener('scroll', revealSections);
     revealSections();
     
-    // Smooth scrolling for navigation links with click animation
+    // Smooth scrolling for navigation links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function(e) {
-            e.preventDefault();
-            const targetId = this.getAttribute('href');
-            if (targetId === '#') return;
-            const target = document.querySelector(targetId);
+            const href = this.getAttribute('href');
+            if (href === '#') return;
+            const target = document.querySelector(href);
             if (target) {
-                // Add click ripple effect
-                const ripple = document.createElement('div');
-                ripple.style.position = 'fixed';
-                ripple.style.width = '10px';
-                ripple.style.height = '10px';
-                ripple.style.borderRadius = '50%';
-                ripple.style.backgroundColor = 'rgba(255,174,66,0.5';
-                ripple.style.pointerEvents = 'none';
-                ripple.style.zIndex = '9999';
-                ripple.style.transform = 'scale(0)';
-                ripple.style.transition = 'transform 0.5s ease-out';
-                document.body.appendChild(ripple);
-                
-                const rect = this.getBoundingClientRect();
-                ripple.style.left = rect.left + rect.width/2 + 'px';
-                ripple.style.top = rect.top + rect.height/2 + 'px';
-                
-                setTimeout(() => {
-                    ripple.style.transform = 'scale(50)';
-                }, 10);
-                
-                setTimeout(() => {
-                    ripple.remove();
-                }, 500);
-                
+                e.preventDefault();
                 target.scrollIntoView({
                     behavior: 'smooth',
                     block: 'start'
                 });
-                
-                // Add animation class to target section
-                target.style.animation = 'none';
-                target.offsetHeight;
-                target.style.animation = 'fadeInUp 0.6s ease-out';
-                setTimeout(() => {
-                    target.style.animation = '';
-                }, 600);
             }
         });
     });
     
-    // Add click animation to all cards
+    // Click animation for cards
     document.querySelectorAll('.feature-card').forEach(card => {
         card.addEventListener('click', function() {
-            this.style.animation = 'none';
-            this.offsetHeight;
-            this.style.animation = 'pulse 0.3s ease-out';
+            this.style.transform = 'scale(0.98)';
             setTimeout(() => {
-                this.style.animation = '';
-            }, 300);
+                this.style.transform = '';
+            }, 150);
         });
     });
     
-    // Add hover effect to structure badges with click notification
-    document.querySelectorAll('.struct-badge').forEach((badge, index) => {
+    // Structure badge click notification
+    document.querySelectorAll('.struct-badge').forEach(badge => {
         badge.addEventListener('click', function() {
-            const bits = this.innerText.match(/\d+/g);
-            if (bits) {
-                const notification = document.createElement('div');
-                notification.textContent = `📊 ${this.innerText.split('·')[0]} provides ${bits[0]}+ bits`;
-                notification.style.position = 'fixed';
-                notification.style.bottom = '20px';
-                notification.style.right = '20px';
-                notification.style.backgroundColor = '#ffae42';
-                notification.style.color = '#0a0c12';
-                notification.style.padding = '10px 20px';
-                notification.style.borderRadius = '40px';
-                notification.style.fontWeight = 'bold';
-                notification.style.zIndex = '9999';
-                notification.style.animation = 'fadeInUp 0.3s ease-out';
-                document.body.appendChild(notification);
-                setTimeout(() => {
-                    notification.style.animation = 'fadeInUp 0.3s reverse';
-                    setTimeout(() => notification.remove(), 300);
-                }, 2000);
-            }
+            const text = this.innerText;
+            const notification = document.createElement('div');
+            notification.textContent = `📊 ${text.split('·')[0]} - Bits info ready`;
+            notification.style.position = 'fixed';
+            notification.style.bottom = '20px';
+            notification.style.right = '20px';
+            notification.style.backgroundColor = '#ffae42';
+            notification.style.color = '#0a0c12';
+            notification.style.padding = '10px 20px';
+            notification.style.borderRadius = '40px';
+            notification.style.fontWeight = 'bold';
+            notification.style.zIndex = '9999';
+            notification.style.animation = 'fadeInUp 0.3s ease-out';
+            document.body.appendChild(notification);
+            setTimeout(() => {
+                notification.remove();
+            }, 2000);
         });
     });
-    
-    // Add typing animation to terminal on load
-    setTimeout(() => {
-        const terminalLines = document.querySelectorAll('.terminal-line');
-        terminalLines.forEach((line, index) => {
-            line.style.animation = 'none';
-            line.offsetHeight;
-            line.style.animation = `slideInRight 0.5s ease-out ${index * 0.2}s forwards`;
-            line.style.opacity = '0';
-        });
-    }, 100);
 </script>
 </body>
 </html>
