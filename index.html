@@ -20,13 +20,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700;14..32,800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        /* (CSS remains unchanged from previous version - omitted for brevity but fully present) */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        /* ===== BASE STYLES (unchanged from previous working version) ===== */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             background: #03060c;
             font-family: 'Inter', sans-serif;
@@ -35,7 +30,6 @@
             scroll-behavior: smooth;
             overflow-x: hidden;
         }
-
         .gradient-bg {
             position: fixed;
             top: 0;
@@ -45,7 +39,6 @@
             z-index: -2;
             background: radial-gradient(circle at 20% 30%, #0a0f1a, #020408);
         }
-        
         .gradient-bg::before {
             content: '';
             position: absolute;
@@ -56,67 +49,27 @@
             background: radial-gradient(circle, rgba(255,174,66,0.1) 0%, transparent 70%);
             animation: rotateBg 30s linear infinite;
         }
-        
-        @keyframes rotateBg {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        .particles {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            pointer-events: none;
-        }
-        
+        @keyframes rotateBg { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        .particles { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; }
         .particle {
             position: absolute;
             background: rgba(255,174,66,0.3);
             border-radius: 50%;
             animation: floatParticle linear infinite;
         }
-        
         @keyframes floatParticle {
-            0% {
-                transform: translateY(100vh) rotate(0deg);
-                opacity: 0;
-            }
-            10% {
-                opacity: 0.5;
-            }
-            90% {
-                opacity: 0.5;
-            }
-            100% {
-                transform: translateY(-100vh) rotate(360deg);
-                opacity: 0;
-            }
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.5; }
+            90% { opacity: 0.5; }
+            100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
         }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0f1722; }
+        ::-webkit-scrollbar-thumb { background: #ffae42; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #ff7b2c; }
+        .container { max-width: 1400px; margin: 0 auto; padding: 0 2rem; }
 
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #0f1722;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #ffae42;
-            border-radius: 10px;
-            transition: background 0.3s;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #ff7b2c;
-        }
-
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 2rem;
-        }
-
+        /* ===== NAVBAR ===== */
         .navbar {
             display: flex;
             justify-content: space-between;
@@ -131,18 +84,7 @@
             border-bottom: 1px solid rgba(255, 174, 66, 0.3);
             animation: slideDown 0.6s ease-out;
         }
-        
-        @keyframes slideDown {
-            from {
-                transform: translateY(-100%);
-                opacity: 0;
-            }
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
-        }
-
+        @keyframes slideDown { from { transform: translateY(-100%); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
         .logo {
             font-size: 1.8rem;
             font-weight: 800;
@@ -152,28 +94,10 @@
             color: transparent;
             transition: transform 0.3s;
         }
-        
-        .logo:hover {
-            transform: scale(1.05);
-        }
-        
-        .logo i {
-            color: #ffae42;
-            margin-right: 8px;
-            animation: pulse 2s infinite;
-        }
-        
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-            flex-wrap: wrap;
-        }
-        
+        .logo:hover { transform: scale(1.05); }
+        .logo i { color: #ffae42; margin-right: 8px; animation: pulse 2s infinite; }
+        @keyframes pulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.1); } }
+        .nav-links { display: flex; gap: 2rem; flex-wrap: wrap; }
         .nav-links a {
             color: #cbdff5;
             text-decoration: none;
@@ -181,57 +105,31 @@
             transition: all 0.3s;
             font-size: 0.95rem;
             position: relative;
+            padding: 0.25rem 0;
         }
-        
         .nav-links a::after {
             content: '';
             position: absolute;
-            bottom: -5px;
+            bottom: -2px;
             left: 0;
             width: 0;
             height: 2px;
             background: linear-gradient(90deg, #ffae42, #ff7b2c);
             transition: width 0.3s;
         }
-        
-        .nav-links a:hover::after {
-            width: 100%;
-        }
-        
-        .nav-links a:hover {
+        .nav-links a:hover::after { width: 100%; }
+        .nav-links a:hover { color: #ffae42; transform: translateY(-2px); }
+        .nav-links a.active {
             color: #ffae42;
-            transform: translateY(-2px);
+            text-shadow: 0 0 8px rgba(255,174,66,0.6);
         }
+        .nav-links a.active::after { width: 100%; background: #ffae42; }
 
-        .hero {
-            padding: 4rem 0 3rem;
-            text-align: center;
-            animation: fadeInUp 0.8s ease-out;
-        }
-        
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        .hero h1 {
-            font-size: 4rem;
-            font-weight: 800;
-            letter-spacing: -1px;
-            animation: glowText 2s ease-in-out infinite;
-        }
-        
-        @keyframes glowText {
-            0%, 100% { text-shadow: 0 0 20px rgba(255,174,66,0.3); }
-            50% { text-shadow: 0 0 40px rgba(255,174,66,0.6); }
-        }
-        
+        /* ===== HERO & COMMON ===== */
+        .hero { padding: 4rem 0 3rem; text-align: center; animation: fadeInUp 0.8s ease-out; }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        .hero h1 { font-size: 4rem; font-weight: 800; letter-spacing: -1px; animation: glowText 2s ease-in-out infinite; }
+        @keyframes glowText { 0%,100% { text-shadow: 0 0 20px rgba(255,174,66,0.3); } 50% { text-shadow: 0 0 40px rgba(255,174,66,0.6); } }
         .gradient-text {
             background: linear-gradient(135deg, #FFD89A, #FF9E4A, #FF6A3D);
             -webkit-background-clip: text;
@@ -240,12 +138,7 @@
             animation: gradientShift 3s ease infinite;
             background-size: 200% 200%;
         }
-        
-        @keyframes gradientShift {
-            0%, 100% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-        }
-
+        @keyframes gradientShift { 0%,100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
         .terminal-preview {
             background: #0a0e17e0;
             backdrop-filter: blur(8px);
@@ -260,32 +153,9 @@
             box-shadow: 0 20px 35px -12px black;
             transition: transform 0.3s, box-shadow 0.3s;
         }
-        
-        .terminal-preview:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 25px 45px -12px rgba(255,174,66,0.3);
-            border-color: #ffae42;
-        }
-        
-        .terminal-line {
-            color: #9cd9ff;
-            border-left: 2px solid #ffae42;
-            padding-left: 1rem;
-            margin: 0.5rem 0;
-            animation: slideInRight 0.5s ease-out;
-        }
-        
-        @keyframes slideInRight {
-            from {
-                opacity: 0;
-                transform: translateX(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-
+        .terminal-preview:hover { transform: translateY(-5px); box-shadow: 0 25px 45px -12px rgba(255,174,66,0.3); border-color: #ffae42; }
+        .terminal-line { color: #9cd9ff; border-left: 2px solid #ffae42; padding-left: 1rem; margin: 0.5rem 0; animation: slideInRight 0.5s ease-out; }
+        @keyframes slideInRight { from { opacity: 0; transform: translateX(-20px); } to { opacity: 1; transform: translateX(0); } }
         section {
             padding: 4rem 0;
             border-bottom: 1px solid rgba(255, 174, 66, 0.15);
@@ -293,12 +163,7 @@
             transform: translateY(30px);
             transition: all 0.6s ease-out;
         }
-        
-        section.revealed {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        
+        section.revealed { opacity: 1; transform: translateY(0); }
         .section-title {
             font-size: 2.2rem;
             font-weight: 700;
@@ -308,24 +173,9 @@
             gap: 12px;
             position: relative;
         }
-        
-        .section-title i {
-            color: #ffae42;
-            font-size: 2rem;
-            transition: transform 0.3s;
-        }
-        
-        .section-title:hover i {
-            transform: rotate(360deg) scale(1.1);
-        }
-
-        .card-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 2rem;
-            margin: 2rem 0;
-        }
-        
+        .section-title i { color: #ffae42; font-size: 2rem; transition: transform 0.3s; }
+        .section-title:hover i { transform: rotate(360deg) scale(1.1); }
+        .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem; margin: 2rem 0; }
         .feature-card {
             background: #0c111cd9;
             backdrop-filter: blur(4px);
@@ -337,7 +187,6 @@
             position: relative;
             overflow: hidden;
         }
-        
         .feature-card::before {
             content: '';
             position: absolute;
@@ -348,78 +197,20 @@
             background: linear-gradient(90deg, transparent, rgba(255,174,66,0.1), transparent);
             transition: left 0.5s;
         }
-        
-        .feature-card:hover::before {
-            left: 100%;
-        }
-        
-        .feature-card:hover {
-            border-color: #ffae42;
-            transform: translateY(-8px) scale(1.02);
-            box-shadow: 0 20px 35px -12px rgba(255,174,66,0.3);
-        }
-        
-        .feature-card i {
-            font-size: 2rem;
-            color: #ffae42;
-            margin-bottom: 1rem;
-            transition: transform 0.3s;
-        }
-        
-        .feature-card:hover i {
-            transform: scale(1.2) rotate(5deg);
-        }
+        .feature-card:hover::before { left: 100%; }
+        .feature-card:hover { border-color: #ffae42; transform: translateY(-8px) scale(1.02); box-shadow: 0 20px 35px -12px rgba(255,174,66,0.3); }
+        .feature-card i { font-size: 2rem; color: #ffae42; margin-bottom: 1rem; transition: transform 0.3s; }
+        .feature-card:hover i { transform: scale(1.2) rotate(5deg); }
+        .feature-card:active { transform: translateY(-4px) scale(0.98); transition: transform 0.1s; }
 
-        .feature-card:active {
-            transform: translateY(-4px) scale(0.98);
-            transition: transform 0.1s;
-        }
-
-        .version-table {
-            overflow-x: auto;
-            background: #070c14;
-            border-radius: 24px;
-            padding: 0.2rem;
-        }
-        
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        
-        th, td {
-            padding: 1rem;
-            text-align: left;
-            border-bottom: 1px solid #1f2a3a;
-        }
-        
-        th {
-            color: #ffcd94;
-            font-weight: 600;
-        }
-        
-        tbody tr {
-            transition: all 0.3s;
-            animation: fadeInRow 0.5s ease-out backwards;
-            animation-delay: calc(var(--row-index, 0) * 0.05s);
-        }
-        
-        @keyframes fadeInRow {
-            from {
-                opacity: 0;
-                transform: translateX(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-        
-        tbody tr:hover {
-            background: rgba(255,174,66,0.1);
-            transform: scale(1.01);
-        }
-        
+        /* Version table */
+        .version-table { overflow-x: auto; background: #070c14; border-radius: 24px; padding: 0.2rem; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 1rem; text-align: left; border-bottom: 1px solid #1f2a3a; }
+        th { color: #ffcd94; font-weight: 600; }
+        tbody tr { transition: all 0.3s; animation: fadeInRow 0.5s ease-out backwards; animation-delay: calc(var(--row-index, 0) * 0.05s); }
+        @keyframes fadeInRow { from { opacity: 0; transform: translateX(-20px); } to { opacity: 1; transform: translateX(0); } }
+        tbody tr:hover { background: rgba(255,174,66,0.1); transform: scale(1.01); }
         .download-link {
             display: inline-flex;
             align-items: center;
@@ -433,16 +224,7 @@
             font-weight: 600;
             transition: all 0.3s;
         }
-        
-        .download-link:hover {
-            transform: scale(1.05);
-            box-shadow: 0 4px 12px rgba(255,174,66,0.4);
-        }
-        
-        .download-link i {
-            font-size: 0.9rem;
-        }
-        
+        .download-link:hover { transform: scale(1.05); box-shadow: 0 4px 12px rgba(255,174,66,0.4); }
         .github-link {
             display: inline-flex;
             align-items: center;
@@ -456,20 +238,8 @@
             font-weight: 600;
             transition: all 0.3s;
         }
-        
-        .github-link:hover {
-            background: #ffae42;
-            color: #0a0c12;
-            transform: scale(1.05);
-        }
-
-        .bits-visual {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1rem;
-            margin: 1.5rem 0;
-        }
-        
+        .github-link:hover { background: #ffae42; color: #0a0c12; transform: scale(1.05); }
+        .bits-visual { display: flex; flex-wrap: wrap; gap: 1rem; margin: 1.5rem 0; }
         .struct-badge {
             background: #1a2538;
             border-radius: 40px;
@@ -481,35 +251,10 @@
             animation: fadeInScale 0.5s ease-out backwards;
             animation-delay: calc(var(--i, 0) * 0.05s);
         }
-        
-        .struct-badge:hover {
-            background: #ffae42;
-            color: #0a0c12;
-            transform: translateY(-3px) scale(1.05);
-            box-shadow: 0 5px 15px rgba(255,174,66,0.4);
-        }
-        
-        @keyframes fadeInScale {
-            from {
-                opacity: 0;
-                transform: scale(0.8);
-            }
-            to {
-                opacity: 1;
-                transform: scale(1);
-            }
-        }
-        
-        .struct-badge span {
-            color: #ffae42;
-            font-weight: 800;
-            transition: color 0.3s;
-        }
-        
-        .struct-badge:hover span {
-            color: #0a0c12;
-        }
-
+        .struct-badge:hover { background: #ffae42; color: #0a0c12; transform: translateY(-3px) scale(1.05); box-shadow: 0 5px 15px rgba(255,174,66,0.4); }
+        @keyframes fadeInScale { from { opacity: 0; transform: scale(0.8); } to { opacity: 1; transform: scale(1); } }
+        .struct-badge span { color: #ffae42; font-weight: 800; transition: color 0.3s; }
+        .struct-badge:hover span { color: #0a0c12; }
         .cmd-block {
             background: #070b12;
             border-left: 4px solid #ffae42;
@@ -521,43 +266,11 @@
             position: relative;
             overflow: hidden;
         }
-        
-        .cmd-block:hover {
-            transform: translateX(8px);
-            border-left-width: 6px;
-            background: #0a1020;
-        }
-
-        .progress-bit {
-            background: #1f2a3a;
-            border-radius: 30px;
-            height: 12px;
-            width: 100%;
-            margin: 12px 0;
-            overflow: hidden;
-        }
-        
-        .progress-fill {
-            width: 78%;
-            height: 100%;
-            background: linear-gradient(90deg, #ffae42, #ff7b2c);
-            border-radius: 30px;
-            animation: fillProgress 1.5s ease-out;
-        }
-        
-        @keyframes fillProgress {
-            from { width: 0%; }
-            to { width: 78%; }
-        }
-
-        .badge-container {
-            display: flex;
-            justify-content: center;
-            gap: 0.8rem;
-            flex-wrap: wrap;
-            margin: 1.5rem 0;
-        }
-        
+        .cmd-block:hover { transform: translateX(8px); border-left-width: 6px; background: #0a1020; }
+        .progress-bit { background: #1f2a3a; border-radius: 30px; height: 12px; width: 100%; margin: 12px 0; overflow: hidden; }
+        .progress-fill { width: 78%; height: 100%; background: linear-gradient(90deg, #ffae42, #ff7b2c); border-radius: 30px; animation: fillProgress 1.5s ease-out; }
+        @keyframes fillProgress { from { width: 0%; } to { width: 78%; } }
+        .badge-container { display: flex; justify-content: center; gap: 0.8rem; flex-wrap: wrap; margin: 1.5rem 0; }
         .badge {
             background: #111a28;
             padding: 0.4rem 1.2rem;
@@ -568,13 +281,7 @@
             transition: all 0.3s;
             cursor: pointer;
         }
-        
-        .badge:hover {
-            transform: translateY(-2px);
-            border-color: #ffae42;
-            background: #ffae4220;
-        }
-
+        .badge:hover { transform: translateY(-2px); border-color: #ffae42; background: #ffae4220; }
         .download-btn {
             background: linear-gradient(95deg, #ffae42, #ff7b2c);
             padding: 0.9rem 2rem;
@@ -586,41 +293,103 @@
             gap: 12px;
             text-decoration: none;
             transition: all 0.3s;
-            position: relative;
-            overflow: hidden;
             cursor: pointer;
             border: none;
             font-family: inherit;
             font-size: 1rem;
         }
-        
-        .download-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 8px 25px rgba(255,174,66,0.5);
-        }
-
-        .footer {
-            text-align: center;
-            padding: 3rem;
-            background: #010308;
-            color: #7b8ba3;
-        }
-        
-        .social-links a {
-            display: inline-block;
-            transition: all 0.3s;
-        }
-        
-        .social-links a:hover {
-            transform: translateY(-5px) rotate(360deg);
-            color: #ffae42;
-        }
-
+        .download-btn:hover { transform: scale(1.05); box-shadow: 0 8px 25px rgba(255,174,66,0.5); }
+        .footer { text-align: center; padding: 3rem; background: #010308; color: #7b8ba3; }
+        .social-links a { display: inline-block; transition: all 0.3s; }
+        .social-links a:hover { transform: translateY(-5px) rotate(360deg); color: #ffae42; }
         @media (max-width: 780px) {
             .hero h1 { font-size: 2.6rem; }
             .container { padding: 0 1.2rem; }
             .section-title { font-size: 1.8rem; }
             th, td { padding: 0.75rem; font-size: 0.85rem; }
+        }
+
+        /* Installation steps */
+        .install-step {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+            background: #0c111cd9;
+            border-radius: 24px;
+            padding: 1.5rem;
+            transition: transform 0.3s;
+        }
+        .install-step:hover { transform: translateX(8px); background: #101725; }
+        .step-icon { font-size: 2.5rem; color: #ffae42; flex-shrink: 0; }
+        .step-content { flex: 1; }
+        .step-content h3 { margin-bottom: 0.5rem; font-size: 1.3rem; }
+        .screenshot-placeholder {
+            margin-top: 1rem;
+            background: #1a2538;
+            border-radius: 16px;
+            padding: 0.8rem;
+            text-align: center;
+            color: #b9cef0;
+            font-size: 0.85rem;
+            border: 1px dashed #ffae42;
+        }
+        .screenshot-placeholder i { font-size: 2rem; margin-bottom: 0.5rem; display: block; color: #ffae42; }
+
+        /* FAQ Accordion */
+        .faq-container {
+            margin-top: 1.5rem;
+        }
+        .faq-item {
+            background: #0c111cd9;
+            border-radius: 20px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+        .faq-question {
+            padding: 1.2rem 1.5rem;
+            font-weight: 600;
+            font-size: 1.1rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #101725;
+            transition: background 0.2s;
+        }
+        .faq-question:hover {
+            background: #1a2538;
+        }
+        .faq-question i {
+            color: #ffae42;
+            transition: transform 0.3s;
+        }
+        .faq-item.active .faq-question i {
+            transform: rotate(180deg);
+        }
+        .faq-answer {
+            max-height: 0;
+            padding: 0 1.5rem;
+            overflow: hidden;
+            transition: max-height 0.4s ease-out, padding 0.2s;
+            color: #cbdff5;
+            border-top: 1px solid transparent;
+        }
+        .faq-item.active .faq-answer {
+            max-height: 500px;
+            padding: 1rem 1.5rem 1.5rem;
+            border-top-color: #ffae4240;
+        }
+        .faq-answer p {
+            margin-bottom: 0.75rem;
+        }
+        .faq-answer code {
+            background: #1a2538;
+            padding: 0.2rem 0.4rem;
+            border-radius: 6px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            color: #ffae42;
         }
     </style>
 </head>
@@ -634,6 +403,8 @@
         <a href="#features" data-tab>⚡ Features</a>
         <a href="#structures" data-tab>🏛️ Structures</a>
         <a href="#commands" data-tab>⌨️ Commands</a>
+        <a href="#installation" data-tab>📦 Installation</a>
+        <a href="#faq" data-tab>❓ FAQ</a>
         <a href="#tutorials" data-tab>🎥 Tutorials</a>
         <a href="#downloads" data-tab>📥 Downloads</a>
     </div>
@@ -665,19 +436,19 @@
     <section id="features">
         <div class="section-title"><i class="fas fa-microchip"></i> <span>Next‑Gen Seed Cracking Engine</span></div>
         <div class="card-grid">
-            <div class="feature-card" data-card><i class="fas fa-cubes"></i><h3>Liftable Structure Cracking</h3><p>Igloo, Desert Pyramid, Jungle Temple, Swamp Hut, Shipwreck, Pillager Outpost, Ocean Monument — each contributes liftable bits (8-9 bits). After 40 bits, auto-cracking begins.</p></div>
-            <div class="feature-card" data-card><i class="fas fa-dragon"></i><h3>End Dimension Analysis</h3><p>Find 5+ End Cities → return to center island → pillar positions yield seed. Configurable end gateways toggle.</p></div>
-            <div class="feature-card" data-card><i class="fas fa-tree"></i><h3>Legacy Biome & Decorator</h3><p>For 1.17-: Dungeon, Warped Fungus, Desert Well, Emerald Ore, End Gateway cracking. Full backwards compatibility.</p></div>
-            <div class="feature-card" data-card><i class="fas fa-chart-line"></i><h3>Real-time Bits Tracker</h3><p><code>/seedcracker data bits</code> shows normal bits (need 32) + liftable bits (need 40). Outline highlights found structures.</p></div>
-            <div class="feature-card" data-card><i class="fas fa-database"></i><h3>Community Seed Database</h3><p>Enable in config → auto-uploads cracked seeds to a public Google Sheet. Help build largest seed repository.</p></div>
-            <div class="feature-card" data-card><i class="fas fa-vial"></i><h3>Debug & Finder Reload</h3><p><code>/seedcracker cracker debug</code> shows advanced info. <code>/seedcracker finder reload</code> rescans chunks.</p></div>
+            <div class="feature-card"><i class="fas fa-cubes"></i><h3>Liftable Structure Cracking</h3><p>Igloo, Desert Pyramid, Jungle Temple, Swamp Hut, Shipwreck, Pillager Outpost, Ocean Monument — each contributes liftable bits (8-9 bits). After 40 bits, auto-cracking begins.</p></div>
+            <div class="feature-card"><i class="fas fa-dragon"></i><h3>End Dimension Analysis</h3><p>Find 5+ End Cities → return to center island → pillar positions yield seed. Configurable end gateways toggle.</p></div>
+            <div class="feature-card"><i class="fas fa-tree"></i><h3>Legacy Biome & Decorator</h3><p>For 1.17-: Dungeon, Warped Fungus, Desert Well, Emerald Ore, End Gateway cracking. Full backwards compatibility.</p></div>
+            <div class="feature-card"><i class="fas fa-chart-line"></i><h3>Real-time Bits Tracker</h3><p><code>/seedcracker data bits</code> shows normal bits (need 32) + liftable bits (need 40). Outline highlights found structures.</p></div>
+            <div class="feature-card"><i class="fas fa-database"></i><h3>Community Seed Database</h3><p>Enable in config → auto-uploads cracked seeds to a public Google Sheet. Help build largest seed repository.</p></div>
+            <div class="feature-card"><i class="fas fa-vial"></i><h3>Debug & Finder Reload</h3><p><code>/seedcracker cracker debug</code> shows advanced info. <code>/seedcracker finder reload</code> rescans chunks.</p></div>
         </div>
     </section>
 
     <!-- Structures section -->
     <section id="structures">
         <div class="section-title"><i class="fas fa-flag-checkered"></i> <span>Structure Bits Reference (1.18+)</span></div>
-        <div class="bits-visual" id="bitsVisual">
+        <div class="bits-visual">
             <div class="struct-badge" style="--i:1"><i class="fas fa-home"></i> Igloo · <span>9 | 9</span></div>
             <div class="struct-badge" style="--i:2"><i class="fas fa-landmark"></i> Desert Pyramid · <span>9 | 9</span></div>
             <div class="struct-badge" style="--i:3"><i class="fas fa-tree"></i> Jungle Temple · <span>9 | 9</span></div>
@@ -705,6 +476,130 @@
         <div class="cmd-block"><i class="fas fa-save"></i> <strong>/seed data restore</strong> — Restore previously saved structure data from config folder.</div>
     </section>
 
+    <!-- Installation Guide -->
+    <section id="installation">
+        <div class="section-title"><i class="fas fa-download"></i> <span>Installation Guide</span></div>
+        <div class="install-step">
+            <div class="step-icon"><i class="fab fa-fabric"></i></div>
+            <div class="step-content">
+                <h3>1. Install Fabric Loader</h3>
+                <p>Download the Fabric installer from <a href="https://fabricmc.net/use/" target="_blank" style="color:#ffae42;">fabricmc.net</a>. Run it and select your Minecraft version (e.g., 1.21.1). Click "Install".</p>
+                <div class="screenshot-placeholder"><i class="fas fa-image"></i> Screenshot placeholder: Fabric installer window with version selected.</div>
+            </div>
+        </div>
+        <div class="install-step">
+            <div class="step-icon"><i class="fas fa-download"></i></div>
+            <div class="step-content">
+                <h3>2. Download SeedCrackerX</h3>
+                <p>Grab the latest <code>.jar</code> file from the <a href="#downloads" style="color:#ffae42;">Downloads section</a> below or from <a href="https://github.com/19MisterX98/SeedcrackerX/releases" target="_blank" style="color:#ffae42;">GitHub Releases</a>. Choose the version matching your Minecraft.</p>
+                <div class="screenshot-placeholder"><i class="fas fa-file-archive"></i> Screenshot placeholder: Release page showing SeedCrackerX-2.15.6.jar.</div>
+            </div>
+        </div>
+        <div class="install-step">
+            <div class="step-icon"><i class="fas fa-folder-open"></i></div>
+            <div class="step-content">
+                <h3>3. Place the JAR in mods folder</h3>
+                <p>Open your Minecraft directory (<code>%appdata%/.minecraft/</code> on Windows, <code>~/Library/Application Support/minecraft/</code> on macOS, or your launcher's instance folder). If the <code>mods</code> folder doesn't exist, create it. Move the downloaded <code>.jar</code> file into <code>mods</code>.</p>
+                <div class="screenshot-placeholder"><i class="fas fa-folder"></i> Screenshot placeholder: mods folder with SeedCrackerX.jar and other mods.</div>
+            </div>
+        </div>
+        <div class="install-step">
+            <div class="step-icon"><i class="fas fa-globe"></i></div>
+            <div class="step-content">
+                <h3>4. (Optional) Install ViaFabric or Multiconnect</h3>
+                <p>To connect to servers on lower Minecraft versions, also place <a href="https://modrinth.com/mod/viafabric" target="_blank" style="color:#ffae42;">ViaFabric</a> or <a href="https://www.curseforge.com/minecraft/mc-mods/multiconnect" target="_blank" style="color:#ffae42;">Multiconnect</a> in the mods folder.</p>
+                <div class="screenshot-placeholder"><i class="fas fa-plug"></i> Screenshot placeholder: ViaFabric in mods folder.</div>
+            </div>
+        </div>
+        <div class="install-step">
+            <div class="step-icon"><i class="fas fa-play"></i></div>
+            <div class="step-content">
+                <h3>5. Launch Minecraft with Fabric profile</h3>
+                <p>In your launcher, select the Fabric profile and start the game. SeedCrackerX will load automatically. Use <code>/seedcracker gui</code> to configure.</p>
+                <div class="screenshot-placeholder"><i class="fas fa-check-circle"></i> Screenshot placeholder: In-game config GUI opened.</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section (New Tab) -->
+    <section id="faq">
+        <div class="section-title"><i class="fas fa-question-circle"></i> <span>Frequently Asked Questions</span></div>
+        <div class="faq-container">
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>❓ Mod not showing up / command not found</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Make sure you're using the correct Fabric loader version for your Minecraft. Ensure the mod JAR is in the correct <code>mods</code> folder and not corrupted. Try reinstalling Fabric and the mod. If using a launcher like MultiMC or Prism, verify the instance has Fabric installed.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>❓ Cracking doesn't start / bits stuck</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Use <code>/seedcracker data bits</code> to check your progress. You need <strong>40 liftable bits</strong> and <strong>32 regular bits</strong>. If bits aren't increasing, try <code>/seedcracker finder reload</code> to rescan chunks. Ensure structures are correctly outlined (green box). Some structures like shipwrecks may not register if partially generated; explore more.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>❓ Outdated mod version for my Minecraft</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Check the <a href="#downloads" style="color:#ffae42;">Downloads table</a> for version compatibility. If you're on a newer Minecraft version that isn't listed, you can use <strong>ViaFabric</strong> or <strong>Multiconnect</strong> to connect to older servers while running a compatible SeedCrackerX version on a newer client.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>❓ Crash on launch / conflicts with other mods</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Try removing other mods temporarily to isolate the issue. Ensure all mods are for the same Minecraft version and Fabric loader. Check the <code>latest.log</code> for error messages. Report issues on <a href="https://github.com/19MisterX98/SeedcrackerX/issues" target="_blank" style="color:#ffae42;">GitHub Issues</a> with the log attached.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>❓ How do I use the database feature?</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Enable the database option in the config GUI (<code>/seedcracker gui</code>). The mod will automatically upload cracked seeds from servers with 10+ players to a public Google Sheet. You need a valid Minecraft license. The sheet is maintained by the community and helps map seeds across versions.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>❓ Can I use SeedCrackerX on Spigot/Paper servers?</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>SeedCrackerX is a client-side Fabric mod. It works on any server (vanilla, Spigot, Paper, etc.) as long as you have the mod installed on your client. However, some server-side anti-cheat plugins may flag the mod; use at your own discretion.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>❓ What are "liftable bits" and "regular bits"?</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p><strong>Liftable bits</strong> come from structures that can be "lifted" (like shipwrecks, pyramids, etc.) and are used for the structure-based cracking method. <strong>Regular bits</strong> come from end cities and other sources. You need 40 liftable bits and 32 regular bits to start the cracking process.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>❓ How do I contribute to the seed database?</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Simply enable the database option in config. When you crack a seed on a server with 10+ players, it will be automatically uploaded (anonymized). You can also manually submit seeds via the <a href="https://docs.google.com/spreadsheets/d/..." target="_blank" style="color:#ffae42;">community Google Sheet</a> link in the mod's config.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Tutorials section -->
     <section id="tutorials">
         <div class="section-title"><i class="fab fa-youtube"></i> <span>Video Tutorials & Walkthroughs</span></div>
@@ -712,19 +607,19 @@
             <div class="feature-card">
                 <i class="fas fa-video"></i>
                 <h3>Structures & End Pillars (1.16+)</h3>
-                <p>Complete guide to cracking seeds using structures, end pillars, and the bits system. Learn how to collect data and let SeedCrackerX reveal the world seed.</p>
+                <p>Complete guide to cracking seeds using structures, end pillars, and the bits system.</p>
                 <a href="https://www.youtube.com/watch?v=aUuPSZVPH8E&t=462s" target="_blank" style="color:#ffae42; display:inline-block; margin-top:12px;">Watch on YouTube →</a>
             </div>
             <div class="feature-card">
                 <i class="fas fa-fungus"></i>
                 <h3>Nether Seed Cracking</h3>
-                <p>Step-by-step tutorial on cracking nether seeds using warped fungus biomes (for versions below 1.18). Essential for full world seed recovery.</p>
+                <p>Step-by-step tutorial on cracking nether seeds using warped fungus biomes (for versions below 1.18).</p>
                 <a href="https://www.youtube.com/watch?v=HKjwgofhKs4" target="_blank" style="color:#ffae42; display:inline-block; margin-top:12px;">Watch on YouTube →</a>
             </div>
             <div class="feature-card">
                 <i class="fas fa-chalkboard-user"></i>
                 <h3>Dungeon Cracking Basics</h3>
-                <p>For older versions (pre-1.18) — locate dungeons and let the mod auto-crack the world seed. Classic method still useful for legacy servers.</p>
+                <p>For older versions (pre-1.18) — locate dungeons and let the mod auto-crack the world seed.</p>
                 <a href="https://www.youtube.com/watch?v=aUuPSZVPH8E&t=462s" target="_blank" style="color:#ffae42; display:inline-block; margin-top:12px;">Watch on YouTube →</a>
             </div>
         </div>
@@ -765,8 +660,9 @@
 <footer class="footer">
     <div class="social-links" style="display: flex; justify-content: center; gap: 1.5rem; margin-bottom: 1rem;">
         <a href="https://github.com/19MisterX98/SeedcrackerX" target="_blank" style="color:#ffae42;"><i class="fab fa-github fa-lg"></i></a>
-        <a href="#" style="color:#ffae42;"><i class="fab fa-discord fa-lg"></i></a>
-        <a href="#" style="color:#ffae42;"><i class="fab fa-youtube fa-lg"></i></a>
+        <!-- Replace # with actual Discord and YouTube links when available -->
+        <a href="#" target="_blank" style="color:#ffae42;"><i class="fab fa-discord fa-lg"></i></a>
+        <a href="#" target="_blank" style="color:#ffae42;"><i class="fab fa-youtube fa-lg"></i></a>
     </div>
     <p>SeedCrackerX — Not affiliated with Mojang. All credits to 19MisterX98 and contributors.</p>
     <p style="margin-top: 1rem; font-size: 0.8rem;"><i class="fas fa-cube"></i> Uncover the hidden numeric DNA of your Minecraft world.</p>
@@ -790,9 +686,8 @@
     }
     createParticles();
 
-    // Scroll reveal animation for sections
+    // Scroll reveal for sections
     const sections = document.querySelectorAll('section');
-    
     function revealSections() {
         sections.forEach(section => {
             const sectionTop = section.getBoundingClientRect().top;
@@ -802,20 +697,35 @@
             }
         });
     }
-    
     window.addEventListener('scroll', revealSections);
     revealSections();
-    
-    // Smooth scrolling for navigation links and the button
+
+    // Smooth scrolling & active nav highlight
     function scrollToSection(targetId) {
         const target = document.querySelector(targetId);
         if (target) {
-            target.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start'
-            });
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
     }
+
+    function setActiveNav() {
+        const navLinks = document.querySelectorAll('.nav-links a');
+        let current = '';
+        sections.forEach(section => {
+            const sectionTop = section.getBoundingClientRect().top;
+            if (sectionTop <= 150 && sectionTop >= -150) {
+                current = '#' + section.getAttribute('id');
+            }
+        });
+        navLinks.forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('href') === current) {
+                link.classList.add('active');
+            }
+        });
+    }
+    window.addEventListener('scroll', setActiveNav);
+    window.addEventListener('load', setActiveNav);
 
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function(e) {
@@ -826,44 +736,24 @@
         });
     });
 
-    // Add click handler for the latest release button
     const latestBtn = document.getElementById('latestReleaseBtn');
     if (latestBtn) {
-        latestBtn.addEventListener('click', () => {
-            scrollToSection('#downloads');
-        });
+        latestBtn.addEventListener('click', () => scrollToSection('#downloads'));
     }
-    
-    // Click animation for cards
+
+    // FAQ accordion
+    document.querySelectorAll('.faq-question').forEach(question => {
+        question.addEventListener('click', () => {
+            const parent = question.parentElement;
+            parent.classList.toggle('active');
+        });
+    });
+
+    // Card click animation
     document.querySelectorAll('.feature-card').forEach(card => {
         card.addEventListener('click', function() {
             this.style.transform = 'scale(0.98)';
-            setTimeout(() => {
-                this.style.transform = '';
-            }, 150);
-        });
-    });
-    
-    // Structure badge click notification
-    document.querySelectorAll('.struct-badge').forEach(badge => {
-        badge.addEventListener('click', function() {
-            const text = this.innerText;
-            const notification = document.createElement('div');
-            notification.textContent = `📊 ${text.split('·')[0]} - Bits info ready`;
-            notification.style.position = 'fixed';
-            notification.style.bottom = '20px';
-            notification.style.right = '20px';
-            notification.style.backgroundColor = '#ffae42';
-            notification.style.color = '#0a0c12';
-            notification.style.padding = '10px 20px';
-            notification.style.borderRadius = '40px';
-            notification.style.fontWeight = 'bold';
-            notification.style.zIndex = '9999';
-            notification.style.animation = 'fadeInUp 0.3s ease-out';
-            document.body.appendChild(notification);
-            setTimeout(() => {
-                notification.remove();
-            }, 2000);
+            setTimeout(() => this.style.transform = '', 150);
         });
     });
 </script>
