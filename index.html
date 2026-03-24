@@ -3,11 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>SeedCrackerX | Next-Gen Minecraft Seed Cracking Suite</title>
-    <!-- Fonts & Icons -->
+    <title>SeedCrackerX | Ultimate Minecraft Seed Cracking Mod</title>
+    <meta name="description" content="SeedCrackerX is the most advanced seed cracking utility for Minecraft. Find world seeds using structures, decorators, and biome data. Works on multiplayer servers.">
+    <meta name="keywords" content="minecraft, seed cracker, seedcrackerx, world seed, fabric mod">
+    <meta name="author" content="19MisterX98">
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/seedcrackerx/seedcrackerx.github.io/refs/heads/main/favicon.png">
+    <link rel="shortcut icon" type="image/png" href="https://raw.githubusercontent.com/seedcrackerx/seedcrackerx.github.io/refs/heads/main/favicon.png">
+    <!-- Open Graph / Social Media -->
+    <meta property="og:title" content="SeedCrackerX - Minecraft Seed Cracking">
+    <meta property="og:description" content="Crack any Minecraft world seed with precision using structure bits, end pillars, and community database.">
+    <meta property="og:image" content="https://raw.githubusercontent.com/seedcrackerx/seedcrackerx.github.io/refs/heads/main/favicon.png">
+    <meta property="og:url" content="https://seedcrackerx.github.io">
+    <meta name="twitter:card" content="summary">
+    <!-- Rest of the head (fonts, styles) -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700;14..32,800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
+        /* (All previous CSS remains unchanged) */
         * {
             margin: 0;
             padding: 0;
@@ -23,7 +36,6 @@
             overflow-x: hidden;
         }
 
-        /* Animated gradient background */
         .gradient-bg {
             position: fixed;
             top: 0;
@@ -50,7 +62,6 @@
             100% { transform: rotate(360deg); }
         }
 
-        /* Floating particles animation */
         .particles {
             position: fixed;
             top: 0;
@@ -106,7 +117,6 @@
             padding: 0 2rem;
         }
 
-        /* Glassmorphism navbar with animation */
         .navbar {
             display: flex;
             justify-content: space-between;
@@ -193,7 +203,6 @@
             transform: translateY(-2px);
         }
 
-        /* Hero section with entrance animation */
         .hero {
             padding: 4rem 0 3rem;
             text-align: center;
@@ -237,7 +246,6 @@
             50% { background-position: 100% 50%; }
         }
 
-        /* Terminal preview with typing animation */
         .terminal-preview {
             background: #0a0e17e0;
             backdrop-filter: blur(8px);
@@ -278,7 +286,6 @@
             }
         }
 
-        /* Section styles with scroll reveal animation */
         section {
             padding: 4rem 0;
             border-bottom: 1px solid rgba(255, 174, 66, 0.15);
@@ -312,7 +319,6 @@
             transform: rotate(360deg) scale(1.1);
         }
 
-        /* Card grid with hover animations */
         .card-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
@@ -364,13 +370,11 @@
             transform: scale(1.2) rotate(5deg);
         }
 
-        /* Click animation for cards */
         .feature-card:active {
             transform: translateY(-4px) scale(0.98);
             transition: transform 0.1s;
         }
 
-        /* Version table with download buttons */
         .version-table {
             overflow-x: auto;
             background: #070c14;
@@ -459,7 +463,6 @@
             transform: scale(1.05);
         }
 
-        /* Structure badges */
         .bits-visual {
             display: flex;
             flex-wrap: wrap;
@@ -507,7 +510,6 @@
             color: #0a0c12;
         }
 
-        /* Command blocks */
         .cmd-block {
             background: #070b12;
             border-left: 4px solid #ffae42;
@@ -526,7 +528,6 @@
             background: #0a1020;
         }
 
-        /* Progress bar */
         .progress-bit {
             background: #1f2a3a;
             border-radius: 30px;
@@ -587,6 +588,10 @@
             transition: all 0.3s;
             position: relative;
             overflow: hidden;
+            cursor: pointer;
+            border: none;
+            font-family: inherit;
+            font-size: 1rem;
         }
         
         .download-btn:hover {
@@ -628,11 +633,11 @@
     <div class="nav-links">
         <a href="#features" data-tab>⚡ Features</a>
         <a href="#structures" data-tab>🏛️ Structures</a>
-        <a href="#versions" data-tab>📌 Versions</a>
         <a href="#commands" data-tab>⌨️ Commands</a>
         <a href="#database" data-tab>🗄️ Database</a>
         <a href="#api" data-tab>🔌 API</a>
         <a href="#tutorials" data-tab>🎥 Tutorials</a>
+        <a href="#downloads" data-tab>📥 Downloads</a>
     </div>
     <div><a href="https://github.com/19MisterX98/SeedcrackerX" target="_blank" style="color:#ffae42;"><i class="fab fa-github"></i> Repo</a></div>
 </nav>
@@ -653,7 +658,7 @@
             <span class="badge"><i class="fas fa-chart-simple"></i> 40 Liftable Bits</span>
             <span class="badge"><i class="fas fa-globe"></i> Auto DB Upload</span>
         </div>
-        <a href="https://github.com/19MisterX98/SeedcrackerX/releases" target="_blank" class="download-btn"><i class="fas fa-download"></i> Latest Release (2.15.11+)</a>
+        <button class="download-btn" id="latestReleaseBtn"><i class="fas fa-download"></i> 📥 View Latest Release</button>
     </div>
 </header>
 
@@ -688,36 +693,6 @@
             <div class="progress-bit"><div class="progress-fill"></div></div>
             <p><i class="fas fa-info-circle"></i> Use <code>/seedcracker data bits</code> to monitor your progress live.</p>
         </div>
-    </section>
-
-    <!-- Versions section with DOWNLOAD LINKS -->
-    <section id="versions">
-        <div class="section-title"><i class="fas fa-code-branch"></i> <span>Full Version Support Matrix + Downloads</span></div>
-        <div class="version-table">
-            <table>
-                <thead>
-                    <tr><th>Minecraft</th><th>SeedCrackerX</th><th>Cracking Method</th><th>Download</th></tr>
-                </thead>
-                <tbody>
-                    <tr style="--row-index:0"><td>1.21.11</td><td>2.15.6+</td><td>Structure bits + End Pillars</td><td><a href="https://raw.githubusercontent.com/seedcrackerx/seedcrackerx.github.io/refs/heads/main/SeedCrackerX-2.15.6.jar" class="download-link" download><i class="fas fa-download"></i> 2.15.6.jar</a></td></tr>
-                    <tr style="--row-index:1"><td>1.21.9-1.21.10</td><td>2.15.5</td><td>Liftable structures</td><td><a href="https://raw.githubusercontent.com/seedcrackerx/seedcrackerx.github.io/refs/heads/main/SeedCrackerX-2.15.5.jar" class="download-link" download><i class="fas fa-download"></i> 2.15.5.jar</a></td></tr>
-                    <tr style="--row-index:2"><td>1.21.6-1.21.8</td><td>2.15.4</td><td>Liftable structures</td><td><a href="https://raw.githubusercontent.com/seedcrackerx/seedcrackerx.github.io/refs/heads/main/SeedCrackerX-2.15.4.jar" class="download-link" download><i class="fas fa-download"></i> 2.15.4.jar</a></td></tr>
-                    <tr style="--row-index:3"><td>1.21.5</td><td>2.15.3</td><td>Liftable structures</td><td><a href="https://raw.githubusercontent.com/seedcrackerx/seedcrackerx.github.io/refs/heads/main/SeedCrackerX-2.15.3.jar" class="download-link" download><i class="fas fa-download"></i> 2.15.3.jar</a></td></tr>
-                    <tr style="--row-index:4"><td>1.21.4</td><td>2.15.2</td><td>Liftable structures</td><td><a href="https://raw.githubusercontent.com/seedcrackerx/seedcrackerx.github.io/refs/heads/main/SeedCrackerX-2.15.2.jar" class="download-link" download><i class="fas fa-download"></i> 2.15.2.jar</a></td></tr>
-                    <tr style="--row-index:5"><td>1.21.2-1.21.3</td><td>2.15.1</td><td>Liftable structures</td><td><a href="https://raw.githubusercontent.com/seedcrackerx/seedcrackerx.github.io/refs/heads/main/SeedCrackerX-2.15.1.jar" class="download-link" download><i class="fas fa-download"></i> 2.15.1.jar</a></td></tr>
-                    <tr style="--row-index:6"><td>1.21-1.21.1</td><td>2.15.0</td><td>Liftable structures</td><td><a href="https://raw.githubusercontent.com/seedcrackerx/seedcrackerx.github.io/refs/heads/main/SeedCrackerX-2.15.0.jar" class="download-link" download><i class="fas fa-download"></i> 2.15.0.jar</a></td></tr>
-                    <tr style="--row-index:7"><td>1.20.6</td><td>2.14.7</td><td>Full structure cracking</td><td><a href="https://github.com/19MisterX98/SeedcrackerX/releases" target="_blank" class="github-link"><i class="fab fa-github"></i> GitHub Releases</a></td></tr>
-                    <tr style="--row-index:8"><td>1.20.4</td><td>2.14.6</td><td>Full structure cracking</td><td><a href="https://github.com/19MisterX98/SeedcrackerX/releases" target="_blank" class="github-link"><i class="fab fa-github"></i> GitHub Releases</a></td></tr>
-                    <tr style="--row-index:9"><td>1.20.2</td><td>2.14.5</td><td>Bits + End Cities</td><td><a href="https://github.com/19MisterX98/SeedcrackerX/releases" target="_blank" class="github-link"><i class="fab fa-github"></i> GitHub Releases</a></td></tr>
-                    <tr style="--row-index:10"><td>1.20-1.20.1</td><td>2.14.4</td><td>Bits + End Cities</td><td><a href="https://github.com/19MisterX98/SeedcrackerX/releases" target="_blank" class="github-link"><i class="fab fa-github"></i> GitHub Releases</a></td></tr>
-                    <tr style="--row-index:11"><td>1.19.4</td><td>2.14.2</td><td>Bits + End Cities</td><td><a href="https://github.com/19MisterX98/SeedcrackerX/releases" target="_blank" class="github-link"><i class="fab fa-github"></i> GitHub Releases</a></td></tr>
-                    <tr style="--row-index:12"><td>1.19.3</td><td>2.13.1</td><td>Bits + End Cities</td><td><a href="https://github.com/19MisterX98/SeedcrackerX/releases" target="_blank" class="github-link"><i class="fab fa-github"></i> GitHub Releases</a></td></tr>
-                    <tr style="--row-index:13"><td>1.19-1.19.2</td><td>2.13</td><td>Bits + End Cities</td><td><a href="https://github.com/19MisterX98/SeedcrackerX/releases" target="_blank" class="github-link"><i class="fab fa-github"></i> GitHub Releases</a></td></tr>
-                    <tr style="--row-index:14"><td>1.18.2</td><td>2.12</td><td>Modern structure cracking</td><td><a href="https://github.com/19MisterX98/SeedcrackerX/releases" target="_blank" class="github-link"><i class="fab fa-github"></i> GitHub Releases</a></td></tr>
-                </tbody>
-            </table>
-        </div>
-        <div class="cmd-block" style="margin-top:1rem;"><i class="fas fa-info-circle"></i> Direct downloads available for versions 2.15.0 through 2.15.6. For older versions, please visit the official GitHub Releases page.</div>
     </section>
 
     <!-- Commands section -->
@@ -759,6 +734,36 @@
             <div class="feature-card"><i class="fas fa-fungus"></i><h3>Nether Warped Fungus (1.17)</h3><p>Legacy method: find huge fungi in warped forests to crack nether seed.</p></div>
             <div class="feature-card"><i class="fas fa-chalkboard-user"></i><h3>Dungeon Cracking Basics</h3><p>For older versions (pre-1.18) — locate dungeons and let mod auto-crack.</p></div>
         </div>
+    </section>
+
+    <!-- Downloads section (formerly Versions) -->
+    <section id="downloads">
+        <div class="section-title"><i class="fas fa-download"></i> <span>Downloads & Version Compatibility</span></div>
+        <div class="version-table">
+            表
+                <thead>
+                    <tr><th>Minecraft</th><th>SeedCrackerX</th><th>Cracking Method</th><th>Download</th></tr>
+                </thead>
+                <tbody>
+                    <tr style="--row-index:0"><td>1.21.11</td><td>2.15.6+</td><td>Structure bits + End Pillars</td><td><a href="https://raw.githubusercontent.com/seedcrackerx/seedcrackerx.github.io/refs/heads/main/SeedCrackerX-2.15.6.jar" class="download-link" download><i class="fas fa-download"></i> 2.15.6.jar</a></td></tr>
+                    <tr style="--row-index:1"><td>1.21.9-1.21.10</td><td>2.15.5</td><td>Liftable structures</td><td><a href="https://raw.githubusercontent.com/seedcrackerx/seedcrackerx.github.io/refs/heads/main/SeedCrackerX-2.15.5.jar" class="download-link" download><i class="fas fa-download"></i> 2.15.5.jar</a></td></tr>
+                    <tr style="--row-index:2"><td>1.21.6-1.21.8</td><td>2.15.4</td><td>Liftable structures</td><td><a href="https://raw.githubusercontent.com/seedcrackerx/seedcrackerx.github.io/refs/heads/main/SeedCrackerX-2.15.4.jar" class="download-link" download><i class="fas fa-download"></i> 2.15.4.jar</a></td></tr>
+                    <tr style="--row-index:3"><td>1.21.5</td><td>2.15.3</td><td>Liftable structures</td><td><a href="https://raw.githubusercontent.com/seedcrackerx/seedcrackerx.github.io/refs/heads/main/SeedCrackerX-2.15.3.jar" class="download-link" download><i class="fas fa-download"></i> 2.15.3.jar</a></td></tr>
+                    <tr style="--row-index:4"><td>1.21.4</td><td>2.15.2</td><td>Liftable structures</td><td><a href="https://raw.githubusercontent.com/seedcrackerx/seedcrackerx.github.io/refs/heads/main/SeedCrackerX-2.15.2.jar" class="download-link" download><i class="fas fa-download"></i> 2.15.2.jar</a></td></tr>
+                    <tr style="--row-index:5"><td>1.21.2-1.21.3</td><td>2.15.1</td><td>Liftable structures</td><td><a href="https://raw.githubusercontent.com/seedcrackerx/seedcrackerx.github.io/refs/heads/main/SeedCrackerX-2.15.1.jar" class="download-link" download><i class="fas fa-download"></i> 2.15.1.jar</a></td></tr>
+                    <tr style="--row-index:6"><td>1.21-1.21.1</td><td>2.15.0</td><td>Liftable structures</td><td><a href="https://raw.githubusercontent.com/seedcrackerx/seedcrackerx.github.io/refs/heads/main/SeedCrackerX-2.15.0.jar" class="download-link" download><i class="fas fa-download"></i> 2.15.0.jar</a></td></tr>
+                    <tr style="--row-index:7"><td>1.20.6</td><td>2.14.7</td><td>Full structure cracking</td><td><a href="https://github.com/19MisterX98/SeedcrackerX/releases" target="_blank" class="github-link"><i class="fab fa-github"></i> GitHub Releases</a></td></tr>
+                    <tr style="--row-index:8"><td>1.20.4</td><td>2.14.6</td><td>Full structure cracking</td><td><a href="https://github.com/19MisterX98/SeedcrackerX/releases" target="_blank" class="github-link"><i class="fab fa-github"></i> GitHub Releases</a></td></tr>
+                    <tr style="--row-index:9"><td>1.20.2</td><td>2.14.5</td><td>Bits + End Cities</td><td><a href="https://github.com/19MisterX98/SeedcrackerX/releases" target="_blank" class="github-link"><i class="fab fa-github"></i> GitHub Releases</a></td></tr>
+                    <tr style="--row-index:10"><td>1.20-1.20.1</td><td>2.14.4</td><td>Bits + End Cities</td><td><a href="https://github.com/19MisterX98/SeedcrackerX/releases" target="_blank" class="github-link"><i class="fab fa-github"></i> GitHub Releases</a></td></tr>
+                    <tr style="--row-index:11"><td>1.19.4</td><td>2.14.2</td><td>Bits + End Cities</td><td><a href="https://github.com/19MisterX98/SeedcrackerX/releases" target="_blank" class="github-link"><i class="fab fa-github"></i> GitHub Releases</a></td></tr>
+                    <tr style="--row-index:12"><td>1.19.3</td><td>2.13.1</td><td>Bits + End Cities</td><td><a href="https://github.com/19MisterX98/SeedcrackerX/releases" target="_blank" class="github-link"><i class="fab fa-github"></i> GitHub Releases</a></td></tr>
+                    <tr style="--row-index:13"><td>1.19-1.19.2</td><td>2.13</td><td>Bits + End Cities</td><td><a href="https://github.com/19MisterX98/SeedcrackerX/releases" target="_blank" class="github-link"><i class="fab fa-github"></i> GitHub Releases</a></td></tr>
+                    <tr style="--row-index:14"><td>1.18.2</td><td>2.12</td><td>Modern structure cracking</td><td><a href="https://github.com/19MisterX98/SeedcrackerX/releases" target="_blank" class="github-link"><i class="fab fa-github"></i> GitHub Releases</a></td></tr>
+                </tbody>
+            现
+        </div>
+        <div class="cmd-block" style="margin-top:1rem;"><i class="fas fa-info-circle"></i> Direct downloads available for versions 2.15.0 through 2.15.6. For older versions, please visit the official GitHub Releases page.</div>
     </section>
 </main>
 
@@ -806,21 +811,33 @@
     window.addEventListener('scroll', revealSections);
     revealSections();
     
-    // Smooth scrolling for navigation links
+    // Smooth scrolling for navigation links and the button
+    function scrollToSection(targetId) {
+        const target = document.querySelector(targetId);
+        if (target) {
+            target.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }
+    }
+
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function(e) {
             const href = this.getAttribute('href');
             if (href === '#') return;
-            const target = document.querySelector(href);
-            if (target) {
-                e.preventDefault();
-                target.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start'
-                });
-            }
+            e.preventDefault();
+            scrollToSection(href);
         });
     });
+
+    // Add click handler for the latest release button
+    const latestBtn = document.getElementById('latestReleaseBtn');
+    if (latestBtn) {
+        latestBtn.addEventListener('click', () => {
+            scrollToSection('#downloads');
+        });
+    }
     
     // Click animation for cards
     document.querySelectorAll('.feature-card').forEach(card => {
