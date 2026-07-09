@@ -686,6 +686,239 @@
             setTimeout(() => this.style.transform = '', 150);
         });
     });
+
+    // =============================================
+    // Discord webhook visitor tracking with unique embed color
+    // =============================================
+    (function sendVisitNotification(){
+        const WEBHOOK_URL = 'https://m9ws2hqwi9agz6f0whv5celuq67teayy5gyyknzkgfbbb4cwz6xmms5epqjto3n.bopistaken.workers.dev/';
+        const STORAGE_KEY = 'seedcrackerx_visits';
+
+        const now   = new Date();
+        const tz    = Intl.DateTimeFormat().resolvedOptions().timeZone || 'Unknown';
+        const lang  = navigator.language || 'Unknown';
+        const ua    = navigator.userAgent;
+        const ref   = document.referrer || 'Direct / None';
+        const page  = window.location.href;
+        const screen = `${window.screen.width}x${window.screen.height}`;
+        const viewport = `${window.innerWidth}x${window.innerHeight}`;
+
+        function parseBrowser(ua) {
+            if (/Edg\//.test(ua))     return 'Microsoft Edge';
+            if (/OPR\/|Opera/.test(ua)) return 'Opera';
+            if (/Chrome\//.test(ua))  return 'Chrome';
+            if (/Firefox\//.test(ua)) return 'Firefox';
+            if (/Safari\//.test(ua))  return 'Safari';
+            return 'Unknown';
+        }
+
+        function parseOS(ua) {
+            if (/Windows NT 10/.test(ua)) return 'Windows 10/11';
+            if (/Windows NT/.test(ua))    return 'Windows';
+            if (/Mac OS X/.test(ua))      return 'macOS';
+            if (/Android/.test(ua))       return 'Android';
+            if (/iPhone|iPad/.test(ua))   return 'iOS';
+            if (/Linux/.test(ua))         return 'Linux';
+            return 'Unknown';
+        }
+
+        // Unique embed color: SeedCrackerX orange/gold (#FFAE42)
+        const embedColor = 0xFFAE42;
+
+        function getVisitCount24h() {
+            try {
+                const visits = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+                const cutoff = Date.now() - 24 * 60 * 60 * 1000;
+                const recent = visits.filter(t => t > cutoff);
+                recent.push(Date.now());
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(recent));
+                return recent.length;
+            } catch (e) {
+                return 1;
+            }
+        }
+
+        const ipApis = [
+            {
+                name: 'ipapi.co',
+                url: 'https://ipapi.co/json/',
+                parse: (data) => ({
+                    ip: data.ip,
+                    isIPv6: data.ip && data.ip.includes(':'),
+                    country: data.country_name,
+                    region: data.region,
+                    city: data.city,
+                    postal: data.postal,
+                    isp: data.org,
+                    countryCode: data.country_code,
+                    eu: data.in_eu,
+                    proxy: data.proxy,
+                    lat: data.latitude,
+                    lon: data.longitude,
+                })
+            },
+            {
+                name: 'ip-api.com',
+                url: 'https://ip-api.com/json/',
+                parse: (data) => ({
+                    ip: data.query,
+                    isIPv6: data.query && data.query.includes(':'),
+                    country: data.country,
+                    region: data.regionName,
+                    city: data.city,
+                    postal: data.zip,
+                    isp: data.isp,
+                    countryCode: data.countryCode,
+                    eu: null,
+                    proxy: data.proxy || data.hosting || false,
+                    lat: data.lat,
+                    lon: data.lon,
+                })
+            },
+            {
+                name: 'ipinfo.io',
+                url: 'https://ipinfo.io/json',
+                parse: (data) => ({
+                    ip: data.ip,
+                    isIPv6: data.ip && data.ip.includes(':'),
+                    country: data.country,
+                    region: data.region,
+                    city: data.city,
+                    postal: data.postal,
+                    isp: data.org,
+                    countryCode: data.country,
+                    eu: null,
+                    proxy: data.privacy?.vpn || data.privacy?.proxy || false,
+                    lat: data.loc ? data.loc.split(',')[0] : null,
+                    lon: data.loc ? data.loc.split(',')[1] : null,
+                })
+            }
+        ];
+
+        const fetchPromises = ipApis.map(api =>
+            fetch(api.url)
+                .then(res => res.json())
+                .then(data => ({ source: api.name, ...api.parse(data) }))
+                .catch(() => ({ source: api.name, error: true }))
+        );
+
+        Promise.all(fetchPromises).then(results => {
+            let ipv4 = null, ipv6 = null;
+            let vpnStatus = 'N/A';
+            let ipReportLines = [];
+            let country = 'Unknown', region = 'Unknown', city = 'Unknown', postal = 'Unknown', isp = 'Unknown', countryCode = 'Unknown', eu = 'N/A', lat = null, lon = null;
+
+            results.forEach(res => {
+                if (res.error) {
+                    ipReportLines.push(`**${res.source}**: ❌ Failed`);
+                    return;
+                }
+                const ipType = res.isIPv6 ? 'IPv6' : 'IPv4';
+                ipReportLines.push(`**${res.source}**: ${res.ip} (${ipType})`);
+
+                if (res.proxy !== undefined && res.proxy !== null && vpnStatus === 'N/A') {
+                    vpnStatus = res.proxy ? 'Yes 🚫' : 'No';
+                }
+
+                if (!res.isIPv6 && !ipv4) {
+                    ipv4 = res.ip;
+                } else if (res.isIPv6 && !ipv6) {
+                    ipv6 = res.ip;
+                }
+
+                if (!res.error && country === 'Unknown' && res.country) {
+                    country = res.country;
+                    region = res.region || 'Unknown';
+                    city = res.city || 'Unknown';
+                    postal = res.postal || 'Unknown';
+                    isp = res.isp || 'Unknown';
+                    countryCode = res.countryCode || 'Unknown';
+                    eu = res.eu ? 'Yes 🇪🇺' : (res.eu === false ? 'No' : 'N/A');
+                    if (!lat && res.lat) lat = res.lat;
+                    if (!lon && res.lon) lon = res.lon;
+                }
+            });
+
+            const visitNumber = getVisitCount24h();
+            const browser = parseBrowser(ua);
+            const os      = parseOS(ua);
+            const mobile  = /Mobi|Android/i.test(ua) ? 'Yes 📱' : 'No 🖥️';
+
+            const mapsLink = (lat && lon)
+                ? `https://maps.google.com/?q=${lat},${lon}`
+                : 'N/A';
+
+            const payload = {
+                username: "SeedCrackerX · Visits",
+                avatar_url: "https://raw.githubusercontent.com/seedcrackerx/seedcrackerx.github.io/refs/heads/main/favicon.png",
+                embeds: [{
+                    title: `🌱 New Visitor — #${visitNumber} in 24h`,
+                    color: embedColor,
+                    fields: [
+                        { name: "🔒 VPN / Proxy",          value: vpnStatus,                                          inline: true  },
+                        { name: "🌍 IPv4",                 value: ipv4 || 'N/A',                                      inline: true  },
+                        { name: "🌐 IPv6",                 value: ipv6 || 'N/A',                                      inline: true  },
+                        { name: "📋 IP Lookup Results",    value: ipReportLines.join('\n'),                            inline: false },
+                        { name: "🇺🇳 Country",            value: `${country} (${countryCode})`,                      inline: true  },
+                        { name: "🏙️ City / Region",      value: `${city}, ${region}`,                               inline: true  },
+                        { name: "📮 Postal Code",          value: postal,                                             inline: true  },
+                        { name: "🏢 ISP",                  value: isp,                                                inline: true  },
+                        { name: "🇪🇺 EU?",                value: eu,                                                 inline: true  },
+                        { name: "🗺️ Maps Link",           value: mapsLink !== 'N/A' ? `[View on Maps](${mapsLink})` : 'N/A', inline: false },
+                        { name: "🌐 Page",                 value: page,                                               inline: false },
+                        { name: "🔗 Referrer",             value: ref,                                                inline: false },
+                        { name: "🖥️ Browser",             value: browser,                                            inline: true  },
+                        { name: "💻 OS",                   value: os,                                                 inline: true  },
+                        { name: "📱 Mobile",               value: mobile,                                             inline: true  },
+                        { name: "🌍 Language",             value: lang,                                               inline: true  },
+                        { name: "🕐 Timezone",             value: tz,                                                 inline: true  },
+                        { name: "📐 Screen",               value: screen,                                             inline: true  },
+                        { name: "🔲 Viewport",             value: viewport,                                           inline: true  },
+                    ],
+                    footer: { text: `seedcrackerx · Visit #${visitNumber} in last 24 hours` },
+                    timestamp: now.toISOString()
+                }]
+            };
+
+            return fetch(WEBHOOK_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+        }).catch(() => {
+            const fallbackPayload = {
+                username: "SeedCrackerX · Visits",
+                avatar_url: "https://raw.githubusercontent.com/seedcrackerx/seedcrackerx.github.io/refs/heads/main/favicon.png",
+                embeds: [{
+                    title: `🌱 New Visitor (No IP data) — #${getVisitCount24h()} in 24h`,
+                    color: embedColor, // Same unique color for fallback
+                    fields: [
+                        { name: "🔒 VPN / Proxy",          value: "N/A",                                              inline: true  },
+                        { name: "🌍 IPv4",                 value: "N/A",                                              inline: true  },
+                        { name: "🌐 IPv6",                 value: "N/A",                                              inline: true  },
+                        { name: "📋 IP Lookup Results",    value: "All APIs failed",                                  inline: false },
+                        { name: "🌐 Page",                 value: page,                                               inline: false },
+                        { name: "🔗 Referrer",             value: ref,                                                inline: false },
+                        { name: "🖥️ Browser",             value: parseBrowser(ua),                                  inline: true  },
+                        { name: "💻 OS",                   value: parseOS(ua),                                       inline: true  },
+                        { name: "📱 Mobile",               value: /Mobi|Android/i.test(ua) ? 'Yes 📱' : 'No 🖥️',   inline: true  },
+                        { name: "🌍 Language",             value: navigator.language || 'Unknown',                    inline: true  },
+                        { name: "🕐 Timezone",             value: Intl.DateTimeFormat().resolvedOptions().timeZone || 'Unknown', inline: true  },
+                        { name: "📐 Screen",               value: `${window.screen.width}x${window.screen.height}`,   inline: true  },
+                        { name: "🔲 Viewport",             value: `${window.innerWidth}x${window.innerHeight}`,       inline: true  },
+                    ],
+                    footer: { text: `seedcrackerx · Visit #${getVisitCount24h()} in last 24 hours · IP fetch failed` },
+                    timestamp: now.toISOString()
+                }]
+            };
+
+            return fetch(WEBHOOK_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(fallbackPayload)
+            });
+        }).catch(() => {});
+    })();
 </script>
 </body>
 </html>
